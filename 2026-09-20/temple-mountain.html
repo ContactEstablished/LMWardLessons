@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Temple on the Mountain · God Is My Salvation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-09-20-isaiah-1-12",
+  title: "God Is My Salvation",
+  reference: "Isaiah 1–12",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  quiz: [
+    { q: "About when did Isaiah prophesy?",
+      choices: ["740–701 BC", "1200 BC", "400 BC", "AD 30"], answer: 0 },
+    { q: "Which prophet is quoted most often in other scripture?",
+      choices: ["Isaiah", "Jeremiah", "Moses", "Elijah"], answer: 0 },
+    { q: "What did Isaiah say when the Lord asked, \"Whom shall I send?\"",
+      choices: ["\"Here am I; send me\"", "\"Not I, Lord\"", "\"Send my brother\"", "\"I am not worthy\""], answer: 0 },
+    { q: "Which king refused to ask God for a sign?",
+      choices: ["Ahaz", "Hezekiah", "David", "Josiah"], answer: 0 },
+    { q: "Which is NOT one of the names in Isaiah 9:6?",
+      choices: ["King of Kings", "Wonderful", "Counsellor", "Prince of Peace"], answer: 0 },
+    { q: "Who set Isaiah's words to music in \"Messiah\" in 1741?",
+      choices: ["Handel", "Bach", "Mozart", "Beethoven"], answer: 0 },
+    { q: "The Lord's house shall be established in the top of the…?",
+      choices: ["Mountains", "Cities", "Heavens", "Valleys"], answer: 0 },
+    { q: "In 1847, Brigham Young and others climbed which peak?",
+      choices: ["Ensign Peak", "Mount Timpanogos", "Pikes Peak", "Mount Sinai"], answer: 0 },
+    { q: "Who quoted Isaiah 11 to Joseph Smith in 1823?",
+      choices: ["Moroni", "Nephi", "John the Baptist", "Peter"], answer: 0 },
+    { q: "\"Behold, God is my ___.\" (Isaiah 12:2)",
+      choices: ["Salvation", "Shepherd", "Fortress", "Light"], answer: 0 }
+  ]
+};
+const GAME = "temple-mountain";
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES (copy to other games) ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(10px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center;user-select:none;-webkit-user-select:none}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:100%;max-width:480px}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.back{display:flex;align-items:center;gap:4px;height:48px;padding:0 4px;font-size:15px;color:var(--muted)}
+.back:hover{color:var(--accent)}
+.score-wrap{display:flex;align-items:baseline;gap:8px}
+.score-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--accent);line-height:1;display:inline-block;min-width:1.2em;text-align:center;transform-origin:center}
+.score.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.menu-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.menu-btn:hover{color:var(--accent)}
+.menu-btn svg{width:22px;height:22px}
+.menu{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);right:16px;z-index:20;min-width:210px;padding:6px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5);
+opacity:0;transform:translateY(-8px) scale(.96);transform-origin:top right;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.menu.open{opacity:1;transform:none;visibility:visible}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 14px;border-radius:9px;font-size:15px;text-align:left}
+.menu button:hover{background:rgba(212,162,76,.1)}
+.menu button[disabled]{opacity:.4;cursor:default}
+.menu .val{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.menu .danger{color:#e8b4a0}
+.eyebrow{margin:14px 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,36px);line-height:1.05;text-align:center;text-wrap:balance}
+.hint{margin:8px 0 16px;text-align:center;color:var(--muted);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;opacity:0}
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,20,.82);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.overlay.open{opacity:1;visibility:visible}
+.cert{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translateY(20px) scale(.96);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .cert{transform:none}
+.cert-card{width:100%;aspect-ratio:4/5;padding:28px 22px;border-radius:6px;background:linear-gradient(160deg,#16293e,#0d1b2a);border:1px solid var(--accent);box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--accent),0 20px 60px rgba(0,0,0,.6);
+display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.cert-eyebrow{margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cert-title{margin:6px 0 0;font-family:var(--serif);font-weight:600;font-style:italic;font-size:34px;line-height:1.05;color:var(--accent);text-wrap:balance}
+.cert-rule{width:56px;height:1px;background:var(--accent);margin:14px 0;opacity:.7}
+.cert-score{margin:0;font-family:var(--serif);font-size:56px;font-weight:700;line-height:1}
+.cert-score small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cert-lesson{margin:18px 0 0;font-family:var(--serif);font-size:20px;line-height:1.2}
+.cert-lesson span{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:4px}
+.cert-date{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.cert-hint{margin:0;font-size:12px;color:var(--muted)}
+.after{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+/* ===================== GAME STYLES ===================== */
+.scene{position:relative;width:100%;aspect-ratio:4/3;max-height:48vh;min-height:260px;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.45);
+ background:linear-gradient(#070f1b 0%,#122a45 55%,#2a4a68 100%);--peak:34.6%}
+.dawn{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 62%,rgba(232,170,90,.75),rgba(212,120,110,.35) 40%,rgba(212,162,76,0) 75%);opacity:.22;transition:opacity 2.4s ease}
+.scene.won .dawn{opacity:1}
+.sun{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#fff3d6,#e9b860 60%,rgba(233,184,96,0) 75%);opacity:0;transform:translateY(70px) scale(.7);transition:transform 2.6s cubic-bezier(.3,.6,.3,1),opacity 1.6s}
+.scene.won .sun{opacity:.9;transform:translateY(-6px) scale(1)}
+.stars{position:absolute;inset:0;transition:opacity 2s}
+.scene.won .stars{opacity:0}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(244,236,216,.7)}
+.mtn{position:absolute;inset:0;width:100%;height:100%;display:block}
+.temple{position:absolute;left:50%;bottom:var(--peak);width:88px;margin-left:-44px;height:70px;display:flex;flex-direction:column-reverse;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.3,.8,.3,1)}
+.course{height:7px;flex:none;background:linear-gradient(90deg,rgba(40,25,5,.35) 0 1px,transparent 1px) 0 0/11px 100%,linear-gradient(#c9b087,#a3875a);border-bottom:1px solid rgba(40,25,5,.45);box-shadow:inset 0 1px 0 rgba(255,240,210,.25)}
+.course:nth-child(even){background-position:5px 0,0 0}
+.spire{position:absolute;left:50%;bottom:calc(var(--peak) + 69px);width:88px;height:46px;margin-left:-44px;display:block;opacity:0;transform:translateY(28px);transition:transform 1.3s cubic-bezier(.2,.9,.3,1) .3s,opacity .9s ease .3s}
+.scene.won .spire{opacity:1;transform:none}
+.banner{position:absolute;left:calc(50% + 2px);bottom:calc(var(--peak) + 100px);width:40px;height:13px;background:linear-gradient(90deg,#d4a24c,#f1cf85 60%,#c48f2f);clip-path:polygon(0 0,100% 0,84% 50%,100% 100%,0 100%);transform-origin:left center;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.9,.3,1.2) 1.3s;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.scene.won .banner{transform:scaleX(1)}
+.scene.no-anim *{transition:none!important}
+.fx{position:absolute;inset:0;pointer-events:none}
+.float{position:absolute;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--accent);text-shadow:0 2px 8px rgba(0,0,0,.6);white-space:nowrap;will-change:transform,opacity}
+.float.small{font-size:16px;font-family:var(--sans);font-weight:600;letter-spacing:.04em}
+.lights{position:fixed;inset:0;z-index:35;pointer-events:none}
+.lights i{position:absolute;width:5px;height:5px;border-radius:50%;background:#f4e2b0;box-shadow:0 0 8px 2px rgba(212,162,76,.8);opacity:0;will-change:transform,opacity}
+/* question area */
+.qa{margin-top:16px}
+.qmeta{display:flex;align-items:center;justify-content:space-between;min-height:28px}
+.qnum{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.flame{display:flex;align-items:center;gap:5px;color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;transform-origin:right center;opacity:0;transform:scale(.6);transition:transform .45s cubic-bezier(.2,1.4,.3,1),opacity .3s}
+.flame.on{opacity:1;transform:scale(1)}.flame.x2{transform:scale(1.2)}.flame.x3{transform:scale(1.42)}
+.flame svg{width:16px;height:18px}
+.question{margin:10px 0 14px;font-family:var(--serif);font-size:clamp(21px,5.8vw,24px);line-height:1.22;text-wrap:pretty;min-height:2.4em}
+.choices{display:grid;gap:8px}
+.choice{min-height:52px;padding:10px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:16px;text-align:left;display:flex;align-items:center;transition:opacity .35s}
+.choices.lock .choice{pointer-events:none}
+.choice.wrong{opacity:.38}
+.choice.right{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+.summary{text-align:center;padding-top:6px}
+.summary h2{margin:0;font-family:var(--serif);font-weight:600;font-size:28px;line-height:1.1}
+.summary p{margin:8px 0 0;color:var(--muted);font-size:14px}
+.legend{margin:18px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+.legend b{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html" aria-label="Back to lessons"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Lessons</a>
+    <div class="score-wrap"><span class="score-label">Score</span><span class="score" id="score">0</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </header>
+
+  <p class="eyebrow">Temple on the Mountain</p>
+  <h1 class="title" id="title"></h1>
+  <p class="hint">Answer to lay each stone. Build the temple on the peak.</p>
+
+  <div class="scene" id="scene">
+    <div class="dawn"></div>
+    <div class="stars" id="stars"></div>
+    <div class="sun"></div>
+    <svg class="mtn" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true">
+      <polygon fill="#22405f" points="0,206 55,168 115,190 175,152 200,146 235,166 285,184 330,160 400,192 400,260 0,260"/>
+      <polygon fill="#182f49" points="0,222 45,196 95,208 140,178 185,192 240,172 285,198 335,180 400,204 400,260 0,260"/>
+      <polygon fill="#0c1a2b" points="0,260 0,230 60,208 118,190 150,170 250,170 292,190 345,208 400,232 400,260"/>
+    </svg>
+    <div class="temple" id="temple"></div>
+    <svg class="spire" viewBox="0 0 88 46" aria-hidden="true">
+      <rect x="32" y="26" width="24" height="20" fill="#b89a68"/>
+      <rect x="26" y="21" width="36" height="6" fill="#d4b98a"/>
+      <polygon points="44,3 32,23 56,23" fill="#d4a24c"/>
+      <polygon points="44,3 32,23 44,23" fill="#e9c877"/>
+      <circle cx="44" cy="2.4" r="2.2" fill="#f4e2b0"/>
+    </svg>
+    <div class="banner"></div>
+    <div class="fx" id="fx"></div>
+  </div>
+
+  <div class="qa" id="qa">
+    <div class="qmeta"><span class="qnum" id="qnum"></span><span class="flame" id="flame"><svg viewBox="0 0 16 18" fill="currentColor"><path d="M8 0c1 3 4 4.5 4 9a4 4 0 0 1-8 0c0-1.8.8-3 1.8-4 .1 1.3.7 2.2 1.7 2.6C7.4 5.5 7 3 8 0z"/></svg><span id="flameTxt"></span></span></div>
+    <div id="qwrap">
+      <p class="question" id="question"></p>
+      <div class="choices" id="choices"></div>
+    </div>
+    <div class="summary hidden" id="summary">
+      <h2>The temple stands.</h2>
+      <p id="summaryTxt"></p>
+    </div>
+  </div>
+
+  <p class="legend"><b>+10</b> per correct answer · <b>+2</b> if quick · 3 in a row <b>×2</b>, 5 in a row <b>×3</b></p>
+  <div class="after"><button class="btn ghost hidden" id="certBtn">View certificate</button><button class="btn ghost hidden" id="againBtn">Play again</button></div>
+</div>
+
+<div class="menu" id="menu" role="menu">
+  <button id="soundBtn" role="menuitem">Sound <span class="val" id="soundVal">Off</span></button>
+  <button id="undoBtn" role="menuitem">Undo last tap</button>
+  <button id="resetBtn" class="danger" role="menuitem">Reset game</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay" id="certOverlay">
+  <div class="cert">
+    <div class="cert-card">
+      <p class="cert-eyebrow">Temple on the Mountain · Completed</p>
+      <h2 class="cert-title" id="certTitle">Master Builder</h2>
+      <div class="cert-rule"></div>
+      <p class="cert-score"><span id="certScore">0</span><small>points</small></p>
+      <p class="cert-lesson" id="certLesson"></p>
+      <p class="cert-date" id="certDate"></p>
+    </div>
+    <button class="btn" id="certClose">Back to the mountain</button>
+    <p class="cert-hint">Take a screenshot to keep it.</p>
+  </div>
+</div>
+
+<script>
+/* ===================== SHELL (copy to other games) ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+const Prefs={
+  get(){try{return JSON.parse(localStorage.getItem('ss:prefs'))||{sound:false}}catch(e){return{sound:false}}},
+  set(p){try{localStorage.setItem('ss:prefs',JSON.stringify(p))}catch(e){}}
+};
+
+const Score={el:null,val:null,
+  init(el){this.el=el},
+  set(n,animate=true){if(n===this.val)return;const up=this.val!==null&&n>this.val;this.val=n;this.el.textContent=n;
+    if(animate&&up){this.el.classList.remove('bump');void this.el.offsetWidth;this.el.classList.add('bump')}}
+};
+
+const Sound={ctx:null,on:false,
+  tone(f,d=.14,t=0,g=.07){if(!this.on)return;try{this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const c=this.ctx,o=c.createOscillator(),a=c.createGain(),now=c.currentTime+t;
+    o.type='sine';o.frequency.value=f;a.gain.setValueAtTime(0,now);a.gain.linearRampToValueAtTime(g,now+.012);a.gain.exponentialRampToValueAtTime(.0001,now+d);
+    o.connect(a).connect(c.destination);o.start(now);o.stop(now+d+.03)}catch(e){}},
+  tap(tier){this.tone({common:523,uncommon:659,rare:784}[tier]||523)},
+  line(){this.tone(659,.16);this.tone(988,.24,.13)},
+  win(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.35,i*.14,.06))}
+};
+
+const Confetti={
+  run(ms=2800){const c=document.getElementById('confetti'),x=c.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.opacity=1;
+    const cols=[LESSON.theme.accent,LESSON.theme.text,'#b8862f','#fff7e6'],P=[];
+    for(let i=0;i<170;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*1.4*dpr,vy:(2+Math.random()*3)*dpr,r:Math.random()*6.28,vr:(Math.random()-.5)*.22,w:(5+Math.random()*5)*dpr,h:(8+Math.random()*8)*dpr,c:cols[i%cols.length],o:1});
+    const t0=performance.now();
+    const step=now=>{x.clearRect(0,0,W,H);const k=(now-t0)/ms;let alive=false;
+      for(const p of P){p.x+=p.vx+Math.sin(now/320+p.r)*.5*dpr;p.y+=p.vy;p.r+=p.vr;if(k>.7)p.o=Math.max(0,1-(k-.7)/.3);if(p.y<H+20&&p.o>0)alive=true;
+        x.save();x.globalAlpha=p.o;x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}
+      if(alive&&k<1.2)requestAnimationFrame(step);else{x.clearRect(0,0,W,H);c.style.opacity=0}};
+    requestAnimationFrame(step)}
+};
+
+function celebrate({title,score}){
+  Confetti.run();Sound.win();
+  document.getElementById('certTitle').textContent=title;
+  document.getElementById('certScore').textContent=score;
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  setTimeout(()=>document.getElementById('certOverlay').classList.add('open'),1500);
+}
+
+const Menu={
+  init({onUndo,onReset,canUndo}){
+    const menu=document.getElementById('menu'),btn=document.getElementById('menuBtn'),sound=document.getElementById('soundBtn'),val=document.getElementById('soundVal'),undo=document.getElementById('undoBtn'),reset=document.getElementById('resetBtn');
+    const prefs=Prefs.get();Sound.on=!!prefs.sound;val.textContent=Sound.on?'On':'Off';
+    const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');reset.textContent='Reset game';armed=false};
+    let armed=false,armTimer;
+    btn.addEventListener('click',e=>{e.stopPropagation();const open=!menu.classList.contains('open');if(open){undo.disabled=!canUndo();menu.classList.add('open');btn.setAttribute('aria-expanded','true')}else close()});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target))close()});
+    sound.addEventListener('click',()=>{Sound.on=!Sound.on;Prefs.set({...Prefs.get(),sound:Sound.on});val.textContent=Sound.on?'On':'Off';if(Sound.on)Sound.tone(659,.15)});
+    undo.addEventListener('click',()=>{onUndo();undo.disabled=!canUndo()});
+    reset.addEventListener('click',()=>{if(!armed){armed=true;reset.textContent='Tap again to reset';clearTimeout(armTimer);armTimer=setTimeout(()=>{armed=false;reset.textContent='Reset game'},3000);return}onReset();close()});
+    return{close}
+  }
+};
+
+/* ===================== TEMPLE ON THE MOUNTAIN ===================== */
+const Q=LESSON.quiz,K=Q.length,TITLE='Master Builder',BASE=10,QUICK=2,QUICK_MS=10000;
+const scene=document.getElementById('scene'),temple=document.getElementById('temple'),fx=document.getElementById('fx'),certBtn=document.getElementById('certBtn'),againBtn=document.getElementById('againBtn'),overlay=document.getElementById('certOverlay'),
+  qwrap=document.getElementById('qwrap'),summary=document.getElementById('summary'),choicesEl=document.getElementById('choices'),flame=document.getElementById('flame');
+let S=Store.load(GAME,null),shownAt=0,pending=null,lightsEl=null;
+if(!S||!Array.isArray(S.order)||S.order.length!==K||!Array.isArray(S.answers))S=fresh();
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fresh(){return{order:Q.map(q=>shuffle(q.choices.map((_,i)=>i))),answers:[],won:false}}
+function save(){Store.save(GAME,S)}
+function total(){return S.answers.reduce((a,x)=>a+x.pts,0)}
+function correct(){return S.answers.filter(x=>x.ok).length}
+function streak(){let n=0;for(let i=S.answers.length-1;i>=0&&S.answers[i].ok;i--)n++;return n}
+function mult(n){return n>=5?3:n>=3?2:1}
+
+function paintTemple(instant){const c=correct();
+  while(temple.children.length>c)temple.removeChild(temple.lastChild);
+  while(temple.children.length<c){const d=document.createElement('div');d.className='course';temple.appendChild(d);
+    if(!instant)d.animate([{transform:'translateY(-60px)',opacity:0},{transform:'translateY(0)',opacity:1}],{duration:560,easing:'cubic-bezier(.3,1.4,.5,1)'})}
+  const wrong=S.answers.length-c,denom=K-wrong;temple.style.transform=denom>0?`scaleY(${(K/denom).toFixed(3)})`:'none'}
+
+function paintFlame(){const n=streak(),m=mult(n);flame.classList.toggle('on',n>=2);flame.classList.toggle('x2',m===2);flame.classList.toggle('x3',m===3);
+  document.getElementById('flameTxt').textContent=m>1?`×${m}`:`${n} in a row`}
+
+function renderQuestion(animate){clearTimeout(pending);const i=S.answers.length;
+  document.getElementById('qnum').textContent=`Question ${i+1} of ${K}`;
+  document.getElementById('question').textContent=Q[i].q;
+  choicesEl.innerHTML='';choicesEl.classList.remove('lock');
+  S.order[i].forEach(ci=>{const b=document.createElement('button');b.className='choice';b.textContent=Q[i].choices[ci];b.addEventListener('click',()=>choose(i,ci,b));choicesEl.appendChild(b)});
+  if(animate)qwrap.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:320,easing:'ease-out'});
+  shownAt=performance.now()}
+
+function choose(i,ci,btn){if(S.answers.length!==i||choicesEl.classList.contains('lock'))return;
+  choicesEl.classList.add('lock');const ok=ci===Q[i].answer,quick=ok&&(performance.now()-shownAt)<QUICK_MS;
+  const m=ok?mult(streak()+1):1,pts=ok?BASE*m+(quick?QUICK:0):0;
+  S.answers.push({ci,ok,pts});const won=S.answers.length===K;if(won)S.won=true;save();
+  if(ok){btn.classList.add('right');[...choicesEl.children].forEach(b=>{if(b!==btn)b.classList.add('wrong')});
+    Sound.tone(659,.16);paintTemple(false);const c=templeTop();floatText(c.x,c.y-14,`+${BASE*m}${m>1?' ×'+m:''}`);
+    if(quick)setTimeout(()=>floatText(c.x,c.y-6,'+2 quick',true),380);
+    Score.set(total());paintFlame()}
+  else{Sound.tone(220,.18,0,.05);btn.classList.add('wrong');
+    btn.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:380,easing:'ease-out'});
+    setTimeout(()=>{[...choicesEl.children].forEach(b=>{if(Q[i].choices[S.order[i][[...choicesEl.children].indexOf(b)]]===Q[i].choices[Q[i].answer])b.classList.add('right')})},260);
+    paintFlame();setTimeout(()=>paintTemple(false),500)}
+  pending=setTimeout(()=>{if(won)win();else renderQuestion(true)},ok?1400:2300)}
+
+function showSummary(){qwrap.classList.add('hidden');summary.classList.remove('hidden');
+  document.getElementById('qnum').textContent='Complete';
+  document.getElementById('summaryTxt').textContent=`${correct()} of ${K} answered correctly · ${total()} points`;
+  certBtn.classList.remove('hidden');againBtn.classList.remove('hidden')}
+function hideSummary(){qwrap.classList.remove('hidden');summary.classList.add('hidden');certBtn.classList.add('hidden');againBtn.classList.add('hidden')}
+
+function win(){scene.classList.add('won');showSummary();
+  setTimeout(lights,1300);setTimeout(()=>celebrate({title:TITLE,score:total()}),3800)}
+
+function templeTop(){const t=temple.getBoundingClientRect(),s=scene.getBoundingClientRect();return{x:t.left-s.left+t.width/2,y:t.top-s.top}}
+function floatText(x,y,txt,small){const e=document.createElement('span');e.className='float'+(small?' small':'');e.textContent=txt;e.style.left=x+'px';e.style.top=y+'px';fx.appendChild(e);
+  e.animate([{transform:'translate(-50%,-50%) scale(.7)',opacity:0},{transform:'translate(-50%,-100%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-220%) scale(1)',opacity:0}],{duration:1100,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}
+
+function lights(){removeLights();lightsEl=document.createElement('div');lightsEl.className='lights';document.body.appendChild(lightsEl);
+  const t=temple.getBoundingClientRect(),tx=t.left+t.width/2,ty=t.top+t.height*.4,W=innerWidth,H=innerHeight;
+  for(let n=0;n<56;n++){const i=document.createElement('i');const side=n%4;let x,y;
+    if(side===0){x=Math.random()*W;y=-6}else if(side===1){x=W+6;y=Math.random()*H}else if(side===2){x=Math.random()*W;y=H+6}else{x=-6;y=Math.random()*H}
+    i.style.left=x+'px';i.style.top=y+'px';lightsEl.appendChild(i);
+    i.animate([{transform:'translate(0,0) scale(.6)',opacity:0},{opacity:1,offset:.15},{opacity:1,offset:.85},{transform:`translate(${tx-x}px,${ty-y}px) scale(.3)`,opacity:0}],{duration:1900+Math.random()*900,delay:Math.random()*1500,easing:'cubic-bezier(.4,0,.3,1)',fill:'forwards'})}
+  setTimeout(removeLights,4800)}
+function removeLights(){if(lightsEl){lightsEl.remove();lightsEl=null}}
+
+function applyState(instant){
+  if(instant)scene.classList.add('no-anim');
+  paintTemple(true);paintFlame();scene.classList.toggle('won',!!S.won);
+  if(S.won)showSummary();else{hideSummary();renderQuestion(false)}
+  Score.set(total(),!instant);
+  if(instant)requestAnimationFrame(()=>requestAnimationFrame(()=>scene.classList.remove('no-anim')))}
+
+function undo(){if(!S.answers.length)return;clearTimeout(pending);S.answers.pop();S.won=false;overlay.classList.remove('open');removeLights();
+  scene.classList.remove('won');hideSummary();paintTemple(true);paintFlame();renderQuestion(true);Score.set(total());save()}
+function reset(){clearTimeout(pending);Store.reset(GAME);S=fresh();overlay.classList.remove('open');removeLights();applyState(true);save()}
+
+// init
+document.getElementById('title').textContent=LESSON.title;
+document.title=`Temple on the Mountain · ${LESSON.title}`;
+document.getElementById('certLesson').innerHTML=`${LESSON.title}<span>${LESSON.reference}</span>`;
+(function stars(){const s=document.getElementById('stars');for(let n=0;n<26;n++){const i=document.createElement('i');i.style.left=Math.random()*100+'%';i.style.top=Math.random()*45+'%';i.style.opacity=.3+Math.random()*.6;s.appendChild(i)}})();
+Score.init(document.getElementById('score'));
+Menu.init({onUndo:undo,onReset:reset,canUndo:()=>S.answers.length>0});
+applyState(true);
+certBtn.addEventListener('click',()=>celebrate({title:TITLE,score:total()}));
+againBtn.addEventListener('click',reset);
+document.getElementById('certClose').addEventListener('click',()=>overlay.classList.remove('open'));
+</script>
+</body>
+</html>

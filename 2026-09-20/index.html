@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>God Is My Salvation · Sunday School Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-09-20-isaiah-1-12",
+  title: "God Is My Salvation",
+  reference: "Isaiah 1–12",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  keyVerse: { ref: "Isaiah 12:2", text: "Behold, God is my salvation; I will trust, and not be afraid." }
+};
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(28px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+.wrap{width:100%;max-width:480px}
+.eyebrow{margin:0 0 6px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(34px,10vw,46px);line-height:1.02;text-align:center;text-wrap:balance}
+.ref{margin:8px 0 0;text-align:center;color:var(--muted);font-size:14px}
+.verse{margin:28px 0 32px;padding:0 8px;text-align:center}
+.verse-text{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(20px,5.6vw,24px);line-height:1.3;text-wrap:pretty}
+.verse-ref{margin:10px 0 0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.rule{width:56px;height:1px;background:var(--accent);opacity:.7;margin:0 auto 28px}
+/* ===================== LANDING ===================== */
+.cards{display:grid;gap:12px}
+.card{display:grid;grid-template-columns:44px minmax(0,1fr) 20px;align-items:center;gap:14px;min-height:88px;padding:16px 16px 16px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);color:var(--text);transition:transform .15s}
+.card:active{transform:scale(.985)}
+.card:hover{color:var(--text)}
+.num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:22px;color:var(--accent);border:1px solid var(--accent)}
+.num svg{display:none;width:22px;height:22px}
+.num.done{background:var(--accent);color:var(--bg)}
+.num.done span{display:none}.num.done svg{display:block}
+.card.done{border-color:rgba(212,162,76,.55)}
+.card h2{margin:0;font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.1}
+.card p{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
+.card .progress{color:var(--accent);margin-top:6px;font-size:12px;letter-spacing:.04em}
+.card .progress:empty{display:none}
+.chev{color:var(--accent);opacity:.8}
+.foot{margin:32px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Adult Sunday School</p>
+  <h1 class="title" id="title"></h1>
+  <p class="ref" id="ref"></p>
+
+  <div class="verse">
+    <p class="verse-text" id="verseText"></p>
+    <p class="verse-ref" id="verseRef"></p>
+  </div>
+  <div class="rule"></div>
+
+  <div class="cards">
+    <a class="card" href="hidden-picture.html" data-game="hidden-picture">
+      <span class="num"><span>1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg></span>
+      <span><h2>Hidden Picture</h2><p>For listeners. Tap the words you hear; each one uncovers part of a picture.</p><p class="progress"></p></span>
+      <span class="chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></span>
+    </a>
+    <a class="card" href="scroll-of-seals.html" data-game="scroll-of-seals">
+      <span class="num"><span>2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg></span>
+      <span><h2>Scroll of Seals</h2><p>For readers. Open six passages and answer to break the wax seals.</p><p class="progress"></p></span>
+      <span class="chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></span>
+    </a>
+    <a class="card" href="temple-mountain.html" data-game="temple-mountain">
+      <span class="num"><span>3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg></span>
+      <span><h2>Temple on the Mountain</h2><p>For thinkers. Ten questions; every right answer lays a stone.</p><p class="progress"></p></span>
+      <span class="chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></span>
+    </a>
+  </div>
+
+  <p class="foot">Play quietly on your own phone while you listen.<br>Sound is off unless you turn it on.</p>
+</div>
+
+<script>
+/* ===================== SHELL ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+/* ===================== LANDING ===================== */
+document.getElementById('title').textContent=LESSON.title;
+document.getElementById('ref').textContent=LESSON.reference;
+document.getElementById('verseText').textContent=LESSON.keyVerse.text;
+document.getElementById('verseRef').textContent=LESSON.keyVerse.ref;
+document.title=`${LESSON.title} · Sunday School Games`;
+const STATUS={
+  'hidden-picture':{title:'Watchman on the Tower',list:'cleared',unit:n=>`${n} revealed`},
+  'scroll-of-seals':{title:'Keeper of the Scroll',list:'opened',unit:n=>`${n} seal${n===1?'':'s'} broken`},
+  'temple-mountain':{title:'Master Builder',list:'answers',unit:n=>`question ${n+1}`}
+};
+document.querySelectorAll('.card[data-game]').forEach(card=>{const g=card.dataset.game,s=Store.load(g,null),m=STATUS[g],p=card.querySelector('.progress');
+  if(!s||!Array.isArray(s[m.list])||!s[m.list].length)return;
+  if(s.won){card.classList.add('done');card.querySelector('.num').classList.add('done');p.textContent=`Completed · ${m.title}`}
+  else p.textContent=`In progress · ${m.unit(s[m.list].length)}`});
+</script>
+</body>
+</html>

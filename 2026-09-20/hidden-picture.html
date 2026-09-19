@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Hidden Picture · God Is My Salvation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-09-20-isaiah-1-12",
+  title: "God Is My Salvation",
+  reference: "Isaiah 1–12",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  keyVerse: { ref: "Isaiah 12:2", text: "Behold, God is my salvation; I will trust, and not be afraid." },
+  revealImage: "img/peaceable-kingdom.jpg",
+  revealVerse: {
+    ref: "Isaiah 11:6",
+    text: "The wolf also shall dwell with the lamb, and the leopard shall lie down with the kid."
+  },
+  words: [
+    { text: "Isaiah",        tier: "common" },
+    { text: "Jesus Christ",  tier: "common" },
+    { text: "Temple",        tier: "common" },
+    { text: "Repent",        tier: "common" },
+    { text: "Forgive",       tier: "common" },
+    { text: "Peace",         tier: "common" },
+    { text: "Scarlet",       tier: "uncommon" },
+    { text: "Snow",          tier: "uncommon" },
+    { text: "\"Here am I\"", tier: "uncommon" },
+    { text: "Messiah",       tier: "uncommon" },
+    { text: "Mountain",      tier: "uncommon" },
+    { text: "Lamb",          tier: "uncommon" },
+    { text: "Seraph",        tier: "rare" },
+    { text: "Ahaz",          tier: "rare" },
+    { text: "Handel",        tier: "rare" },
+    { text: "Grand Blanc",   tier: "rare" }
+  ]
+};
+const GAME = "hidden-picture";
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES (copy to other games) ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(10px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center;user-select:none;-webkit-user-select:none}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:100%;max-width:480px}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.back{display:flex;align-items:center;gap:4px;height:48px;padding:0 4px;font-size:15px;color:var(--muted)}
+.back:hover{color:var(--accent)}
+.score-wrap{display:flex;align-items:baseline;gap:8px}
+.score-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--accent);line-height:1;display:inline-block;min-width:1.2em;text-align:center;transform-origin:center}
+.score.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.menu-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.menu-btn:hover{color:var(--accent)}
+.menu-btn svg{width:22px;height:22px}
+.menu{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);right:16px;z-index:20;min-width:210px;padding:6px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5);
+opacity:0;transform:translateY(-8px) scale(.96);transform-origin:top right;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.menu.open{opacity:1;transform:none;visibility:visible}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 14px;border-radius:9px;font-size:15px;text-align:left}
+.menu button:hover{background:rgba(212,162,76,.1)}
+.menu button[disabled]{opacity:.4;cursor:default}
+.menu .val{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.menu .danger{color:#e8b4a0}
+.eyebrow{margin:14px 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,36px);line-height:1.05;text-align:center;text-wrap:balance}
+.hint{margin:8px 0 16px;text-align:center;color:var(--muted);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;opacity:0}
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,20,.82);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.overlay.open{opacity:1;visibility:visible}
+.cert{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translateY(20px) scale(.96);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .cert{transform:none}
+.cert-card{width:100%;aspect-ratio:4/5;padding:28px 22px;border-radius:6px;background:linear-gradient(160deg,#16293e,#0d1b2a);border:1px solid var(--accent);box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--accent),0 20px 60px rgba(0,0,0,.6);
+display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.cert-eyebrow{margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cert-title{margin:6px 0 0;font-family:var(--serif);font-weight:600;font-style:italic;font-size:34px;line-height:1.05;color:var(--accent);text-wrap:balance}
+.cert-rule{width:56px;height:1px;background:var(--accent);margin:14px 0;opacity:.7}
+.cert-score{margin:0;font-family:var(--serif);font-size:56px;font-weight:700;line-height:1}
+.cert-score small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cert-lesson{margin:18px 0 0;font-family:var(--serif);font-size:20px;line-height:1.2}
+.cert-lesson span{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:4px}
+.cert-date{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.cert-hint{margin:0;font-size:12px;color:var(--muted)}
+.after{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+/* ===================== GAME STYLES ===================== */
+.board{position:relative;width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0a1522;box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.art{position:absolute;inset:0;background-size:cover;background-position:center}
+.art.placeholder{background:
+ radial-gradient(circle at 50% 36%,rgba(244,236,216,.95) 0 6%,rgba(212,162,76,.55) 7%,rgba(212,162,76,0) 22%),
+ radial-gradient(ellipse 60% 30% at 15% 78%,#3a5f6e 0 60%,transparent 61%),
+ radial-gradient(ellipse 70% 32% at 85% 82%,#2b4d5e 0 60%,transparent 61%),
+ radial-gradient(ellipse 120% 28% at 50% 100%,#5b7a5a 0 60%,transparent 61%),
+ linear-gradient(#0f2438 0%,#2f5570 48%,#6f8f9a 60%,#1f3a3c 100%)}
+.art.placeholder::after{content:attr(data-label);position:absolute;left:0;right:0;bottom:12%;text-align:center;font-family:var(--serif);font-style:italic;font-size:20px;color:rgba(244,236,216,.8);letter-spacing:.04em}
+.art.sepia{filter:sepia(1) brightness(.78) contrast(.95)}
+.art.color{opacity:0;transition:opacity 1.8s ease .5s}
+.board.won .art.color{opacity:1}
+.board.no-anim *{transition:none!important}
+.grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:5px;padding:5px}
+.board.won .grid{pointer-events:none}
+.tile{position:relative;perspective:700px;min-width:0;min-height:48px}
+.tile button{position:relative;width:100%;height:100%;overflow:hidden;border-radius:8px;padding:6px;border:1px solid var(--line);background:var(--panel);color:var(--text);
+display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--serif);font-weight:600;font-size:clamp(14px,4.4vw,20px);line-height:1.1;text-wrap:balance;
+box-shadow:0 2px 8px rgba(0,0,0,.4);backface-visibility:hidden;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,.7,.2,1),opacity .4s ease .12s}
+.tile button:active{transform:scale(.95)}
+.tile.gone button{transform:rotateY(180deg) scale(.6);opacity:0;pointer-events:none}
+.tile .pts{position:absolute;right:6px;bottom:4px;font-family:var(--sans);font-size:10px;letter-spacing:.06em;color:var(--muted)}
+.tile.uncommon button{border-color:rgba(212,162,76,.5);background:var(--panel-2)}
+.tile.uncommon .pts{color:var(--accent)}
+.tile.rare button{border-color:var(--accent);box-shadow:0 0 0 1px rgba(212,162,76,.45),0 2px 12px rgba(212,162,76,.3)}
+.tile.rare .pts{color:var(--accent);font-weight:600}
+.tile.rare .shimmer{position:absolute;top:-60%;bottom:-60%;left:0;width:36%;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(244,236,216,.32),transparent);transform:translateX(-160%) rotate(12deg);animation:shimmer 3s ease-in-out infinite}
+@keyframes shimmer{0%{transform:translateX(-160%) rotate(12deg)}55%,100%{transform:translateX(420%) rotate(12deg)}}
+.fx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.float{position:absolute;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--accent);text-shadow:0 2px 8px rgba(0,0,0,.6);will-change:transform,opacity}
+.spark{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);will-change:transform,opacity}
+.band{position:absolute;will-change:transform,opacity}
+.verse{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 18px;background:linear-gradient(rgba(13,27,42,0),rgba(13,27,42,.85));text-align:center;opacity:0;transition:opacity 1.2s ease 1.7s;pointer-events:none}
+.board.won .verse{opacity:1}
+.verse-text{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(17px,5vw,21px);line-height:1.25;text-wrap:pretty}
+.verse-ref{margin:6px 0 0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.legend{margin:14px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+.legend b{color:var(--accent);font-weight:600}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html" aria-label="Back to lessons"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Lessons</a>
+    <div class="score-wrap"><span class="score-label">Score</span><span class="score" id="score">0</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </header>
+
+  <p class="eyebrow">Hidden Picture</p>
+  <h1 class="title" id="title"></h1>
+  <p class="hint">Tap a word when you hear it in class.</p>
+
+  <div class="board" id="board">
+    <div class="art sepia placeholder" id="artSepia" data-label="Peaceable Kingdom"></div>
+    <div class="art color placeholder" id="artColor" data-label="Peaceable Kingdom"></div>
+    <div class="grid" id="grid"></div>
+    <div class="verse" id="verse"><p class="verse-text" id="verseText"></p><p class="verse-ref" id="verseRef"></p></div>
+    <div class="fx" id="fx"></div>
+  </div>
+
+  <p class="legend"><b>1</b> common · <b>2</b> uncommon · <b>5</b> rare<br>Clear a full row or column for <b>+3</b></p>
+  <div class="after"><button class="btn ghost hidden" id="certBtn">View certificate</button><button class="btn ghost hidden" id="againBtn">Play again</button></div>
+</div>
+
+<div class="menu" id="menu" role="menu">
+  <button id="soundBtn" role="menuitem">Sound <span class="val" id="soundVal">Off</span></button>
+  <button id="undoBtn" role="menuitem">Undo last tap</button>
+  <button id="resetBtn" class="danger" role="menuitem">Reset game</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay" id="certOverlay">
+  <div class="cert">
+    <div class="cert-card">
+      <p class="cert-eyebrow">Hidden Picture · Completed</p>
+      <h2 class="cert-title" id="certTitle">Watchman on the Tower</h2>
+      <div class="cert-rule"></div>
+      <p class="cert-score"><span id="certScore">0</span><small>points</small></p>
+      <p class="cert-lesson" id="certLesson"></p>
+      <p class="cert-date" id="certDate"></p>
+    </div>
+    <button class="btn" id="certClose">Back to picture</button>
+    <p class="cert-hint">Take a screenshot to keep it.</p>
+  </div>
+</div>
+
+<script>
+/* ===================== SHELL (copy to other games) ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+const Prefs={
+  get(){try{return JSON.parse(localStorage.getItem('ss:prefs'))||{sound:false}}catch(e){return{sound:false}}},
+  set(p){try{localStorage.setItem('ss:prefs',JSON.stringify(p))}catch(e){}}
+};
+
+const Score={el:null,val:null,
+  init(el){this.el=el},
+  set(n,animate=true){if(n===this.val)return;const up=this.val!==null&&n>this.val;this.val=n;this.el.textContent=n;
+    if(animate&&up){this.el.classList.remove('bump');void this.el.offsetWidth;this.el.classList.add('bump')}}
+};
+
+const Sound={ctx:null,on:false,
+  tone(f,d=.14,t=0,g=.07){if(!this.on)return;try{this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const c=this.ctx,o=c.createOscillator(),a=c.createGain(),now=c.currentTime+t;
+    o.type='sine';o.frequency.value=f;a.gain.setValueAtTime(0,now);a.gain.linearRampToValueAtTime(g,now+.012);a.gain.exponentialRampToValueAtTime(.0001,now+d);
+    o.connect(a).connect(c.destination);o.start(now);o.stop(now+d+.03)}catch(e){}},
+  tap(tier){this.tone({common:523,uncommon:659,rare:784}[tier]||523)},
+  line(){this.tone(659,.16);this.tone(988,.24,.13)},
+  win(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.35,i*.14,.06))}
+};
+
+const Confetti={
+  run(ms=2800){const c=document.getElementById('confetti'),x=c.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.opacity=1;
+    const cols=[LESSON.theme.accent,LESSON.theme.text,'#b8862f','#fff7e6'],P=[];
+    for(let i=0;i<170;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*1.4*dpr,vy:(2+Math.random()*3)*dpr,r:Math.random()*6.28,vr:(Math.random()-.5)*.22,w:(5+Math.random()*5)*dpr,h:(8+Math.random()*8)*dpr,c:cols[i%cols.length],o:1});
+    const t0=performance.now();
+    const step=now=>{x.clearRect(0,0,W,H);const k=(now-t0)/ms;let alive=false;
+      for(const p of P){p.x+=p.vx+Math.sin(now/320+p.r)*.5*dpr;p.y+=p.vy;p.r+=p.vr;if(k>.7)p.o=Math.max(0,1-(k-.7)/.3);if(p.y<H+20&&p.o>0)alive=true;
+        x.save();x.globalAlpha=p.o;x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}
+      if(alive&&k<1.2)requestAnimationFrame(step);else{x.clearRect(0,0,W,H);c.style.opacity=0}};
+    requestAnimationFrame(step)}
+};
+
+function celebrate({title,score}){
+  Confetti.run();Sound.win();
+  document.getElementById('certTitle').textContent=title;
+  document.getElementById('certScore').textContent=score;
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  setTimeout(()=>document.getElementById('certOverlay').classList.add('open'),1500);
+}
+
+const Menu={
+  init({onUndo,onReset,canUndo}){
+    const menu=document.getElementById('menu'),btn=document.getElementById('menuBtn'),sound=document.getElementById('soundBtn'),val=document.getElementById('soundVal'),undo=document.getElementById('undoBtn'),reset=document.getElementById('resetBtn');
+    const prefs=Prefs.get();Sound.on=!!prefs.sound;val.textContent=Sound.on?'On':'Off';
+    const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');reset.textContent='Reset game';armed=false};
+    let armed=false,armTimer;
+    btn.addEventListener('click',e=>{e.stopPropagation();const open=!menu.classList.contains('open');if(open){undo.disabled=!canUndo();menu.classList.add('open');btn.setAttribute('aria-expanded','true')}else close()});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target))close()});
+    sound.addEventListener('click',()=>{Sound.on=!Sound.on;Prefs.set({...Prefs.get(),sound:Sound.on});val.textContent=Sound.on?'On':'Off';if(Sound.on)Sound.tone(659,.15)});
+    undo.addEventListener('click',()=>{onUndo();undo.disabled=!canUndo()});
+    reset.addEventListener('click',()=>{if(!armed){armed=true;reset.textContent='Tap again to reset';clearTimeout(armTimer);armTimer=setTimeout(()=>{armed=false;reset.textContent='Reset game'},3000);return}onReset();close()});
+    return{close}
+  }
+};
+
+/* ===================== HIDDEN PICTURE ===================== */
+const PTS={common:1,uncommon:2,rare:5},N=4,WORDS=LESSON.words.slice(0,N*N);
+const board=document.getElementById('board'),grid=document.getElementById('grid'),fx=document.getElementById('fx'),certBtn=document.getElementById('certBtn'),againBtn=document.getElementById('againBtn'),overlay=document.getElementById('certOverlay');
+let S=Store.load(GAME,null);
+if(!S||!Array.isArray(S.order)||S.order.length!==WORDS.length||!Array.isArray(S.cleared))S=fresh();
+
+function fresh(){const o=WORDS.map((_,i)=>i);for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]]}return{order:o,cleared:[],won:false}}
+function save(){Store.save(GAME,S)}
+function lines(cl){const s=new Set(cl),L=[];
+  for(let r=0;r<N;r++){let ok=true;for(let c=0;c<N;c++)if(!s.has(r*N+c))ok=false;if(ok)L.push('r'+r)}
+  for(let c=0;c<N;c++){let ok=true;for(let r=0;r<N;r++)if(!s.has(r*N+c))ok=false;if(ok)L.push('c'+c)}return L}
+function total(){return S.cleared.reduce((a,p)=>a+(PTS[WORDS[S.order[p]].tier]||1),0)+3*lines(S.cleared).length}
+
+function build(){grid.innerHTML='';
+  S.order.forEach((wi,pos)=>{const w=WORDS[wi],t=document.createElement('div');t.className='tile '+w.tier;t.dataset.pos=pos;
+    const b=document.createElement('button');b.setAttribute('aria-label',`${w.text}, ${PTS[w.tier]} point${PTS[w.tier]>1?'s':''}`);
+    const word=document.createElement('span');word.className='word';word.textContent=w.text;b.appendChild(word);
+    const pts=document.createElement('span');pts.className='pts';pts.textContent=PTS[w.tier];b.appendChild(pts);
+    if(w.tier==='rare'){const sh=document.createElement('span');sh.className='shimmer';b.appendChild(sh)}
+    b.addEventListener('click',()=>tap(pos));t.appendChild(b);grid.appendChild(t)})}
+
+function applyState(instant){
+  if(instant)board.classList.add('no-anim');
+  [...grid.children].forEach((t,pos)=>t.classList.toggle('gone',S.cleared.includes(pos)));
+  board.classList.toggle('won',!!S.won);certBtn.classList.toggle('hidden',!S.won);againBtn.classList.toggle('hidden',!S.won);
+  Score.set(total(),!instant);
+  if(instant)requestAnimationFrame(()=>requestAnimationFrame(()=>board.classList.remove('no-anim')))}
+
+function tap(pos){if(S.cleared.includes(pos)||S.won)return;
+  const w=WORDS[S.order[pos]],before=lines(S.cleared);S.cleared.push(pos);
+  const newL=lines(S.cleared).filter(l=>!before.includes(l));
+  grid.children[pos].classList.add('gone');Sound.tap(w.tier);
+  const c=center(pos);floatText(c.x,c.y,'+'+PTS[w.tier]);if(w.tier==='rare')sparkle(c.x,c.y);
+  newL.forEach((l,i)=>setTimeout(()=>sweep(l),350+i*300));if(newL.length)setTimeout(()=>Sound.line(),350);
+  Score.set(total());
+  if(S.cleared.length===WORDS.length){S.won=true;save();setTimeout(()=>{board.classList.add('won');certBtn.classList.remove('hidden');againBtn.classList.remove('hidden')},500);setTimeout(()=>celebrate({title:'Watchman on the Tower',score:total()}),3200)}
+  else save()}
+
+function undo(){if(!S.cleared.length)return;const pos=S.cleared.pop();S.won=false;overlay.classList.remove('open');board.classList.remove('won');certBtn.classList.add('hidden');againBtn.classList.add('hidden');
+  grid.children[pos].classList.remove('gone');Score.set(total());save()}
+function reset(){Store.reset(GAME);S=fresh();overlay.classList.remove('open');build();applyState(true);save()}
+
+function center(pos){const t=grid.children[pos].getBoundingClientRect(),b=board.getBoundingClientRect();return{x:t.left-b.left+t.width/2,y:t.top-b.top+t.height/2}}
+function floatText(x,y,txt){const e=document.createElement('span');e.className='float';e.textContent=txt;e.style.left=x+'px';e.style.top=y+'px';fx.appendChild(e);
+  e.animate([{transform:'translate(-50%,-50%) scale(.7)',opacity:0},{transform:'translate(-50%,-100%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-220%) scale(1)',opacity:0}],{duration:1000,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}
+function sparkle(x,y){for(let i=0;i<14;i++){const s=document.createElement('span');s.className='spark';s.style.left=x+'px';s.style.top=y+'px';fx.appendChild(s);
+  const a=Math.random()*6.283,d=40+Math.random()*50,dx=Math.cos(a)*d,dy=Math.sin(a)*d;
+  s.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0)`,opacity:0}],{duration:600+Math.random()*400,easing:'cubic-bezier(.1,.7,.3,1)',fill:'forwards'}).onfinish=()=>s.remove()}}
+function sweep(l){const row=l[0]==='r',i=+l[1],b=document.createElement('div');b.className='band';const acc=LESSON.theme.accent;
+  if(row){b.style.cssText=`top:${i*25}%;height:25%;left:0;width:100%;background:linear-gradient(90deg,transparent,${acc}66 45%,${LESSON.theme.text}cc 50%,${acc}66 55%,transparent)`}
+  else{b.style.cssText=`left:${i*25}%;width:25%;top:0;height:100%;background:linear-gradient(180deg,transparent,${acc}66 45%,${LESSON.theme.text}cc 50%,${acc}66 55%,transparent)`}
+  fx.appendChild(b);const ax=row?'translateX':'translateY';
+  b.animate([{transform:`${ax}(-100%)`,opacity:0},{opacity:1,offset:.2},{opacity:1,offset:.8},{transform:`${ax}(100%)`,opacity:0}],{duration:850,easing:'ease-in-out',fill:'forwards'}).onfinish=()=>b.remove();
+  const r=board.getBoundingClientRect();floatText(row?r.width/2:(i+.5)*r.width/4,row?(i+.5)*r.height/4:r.height/2,'+3')}
+
+function loadArt(){if(!LESSON.revealImage)return;const img=new Image();img.onload=()=>{['artSepia','artColor'].forEach(id=>{const e=document.getElementById(id);e.classList.remove('placeholder');e.style.backgroundImage=`url("${LESSON.revealImage}")`})};img.src=LESSON.revealImage}
+
+// init
+document.getElementById('title').textContent=LESSON.title;
+document.title=`Hidden Picture · ${LESSON.title}`;
+document.getElementById('verseText').textContent=LESSON.revealVerse.text;
+document.getElementById('verseRef').textContent=LESSON.revealVerse.ref;
+document.getElementById('certLesson').innerHTML=`${LESSON.title}<span>${LESSON.reference}</span>`;
+Score.init(document.getElementById('score'));
+Menu.init({onUndo:undo,onReset:reset,canUndo:()=>S.cleared.length>0});
+build();applyState(true);loadArt();
+certBtn.addEventListener('click',()=>celebrate({title:'Watchman on the Tower',score:total()}));
+againBtn.addEventListener('click',reset);
+document.getElementById('certClose').addEventListener('click',()=>overlay.classList.remove('open'));
+</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Scroll of Seals · God Is My Salvation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-09-20-isaiah-1-12",
+  title: "God Is My Salvation",
+  reference: "Isaiah 1–12",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  keyVerse: {
+    ref: "Isaiah 12:2",
+    text: "Behold, God is my salvation; I will trust, and not be afraid."
+  },
+  scriptures: [
+    { ref: "Isaiah 1:18",  url: "https://www.churchofjesuschrist.org/study/scriptures/ot/isa/1?lang=eng&id=p18#p18",
+      question: "Sins as scarlet shall be as white as…?", choices: ["Snow", "Wool", "Light", "Linen"], answer: 0 },
+    { ref: "Isaiah 6:5–8", url: "https://www.churchofjesuschrist.org/study/scriptures/ot/isa/6?lang=eng&id=p5-p8#p5",
+      question: "What touched Isaiah's lips?", choices: ["A live coal", "Oil", "Water", "A scroll"], answer: 0 },
+    { ref: "Isaiah 9:6",   url: "https://www.churchofjesuschrist.org/study/scriptures/ot/isa/9?lang=eng&id=p6#p6",
+      question: "Which name appears in this verse?", choices: ["Prince of Peace", "King of Kings", "Good Shepherd", "Lamb of God"], answer: 0 },
+    { ref: "Isaiah 2:2–3", url: "https://www.churchofjesuschrist.org/study/scriptures/ot/isa/2?lang=eng&id=p2-p3#p2",
+      question: "All nations shall ___ unto it.", choices: ["Flow", "Bow", "Sing", "Walk"], answer: 0 },
+    { ref: "Isaiah 11:6",  url: "https://www.churchofjesuschrist.org/study/scriptures/ot/isa/11?lang=eng&id=p6#p6",
+      question: "The wolf shall dwell with the…?", choices: ["Lamb", "Lion", "Kid", "Calf"], answer: 0 },
+    { ref: "Isaiah 12:2",  url: "https://www.churchofjesuschrist.org/study/scriptures/ot/isa/12?lang=eng&id=p2#p2",
+      question: "I will trust, and not be…?", choices: ["Afraid", "Ashamed", "Alone", "Moved"], answer: 0 }
+  ]
+};
+const GAME = "scroll-of-seals";
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES (copy to other games) ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(10px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center;user-select:none;-webkit-user-select:none}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:100%;max-width:480px}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.back{display:flex;align-items:center;gap:4px;height:48px;padding:0 4px;font-size:15px;color:var(--muted)}
+.back:hover{color:var(--accent)}
+.score-wrap{display:flex;align-items:baseline;gap:8px}
+.score-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--accent);line-height:1;display:inline-block;min-width:1.2em;text-align:center;transform-origin:center}
+.score.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.menu-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.menu-btn:hover{color:var(--accent)}
+.menu-btn svg{width:22px;height:22px}
+.menu{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);right:16px;z-index:20;min-width:210px;padding:6px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5);
+opacity:0;transform:translateY(-8px) scale(.96);transform-origin:top right;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.menu.open{opacity:1;transform:none;visibility:visible}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 14px;border-radius:9px;font-size:15px;text-align:left}
+.menu button:hover{background:rgba(212,162,76,.1)}
+.menu button[disabled]{opacity:.4;cursor:default}
+.menu .val{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.menu .danger{color:#e8b4a0}
+.eyebrow{margin:14px 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,36px);line-height:1.05;text-align:center;text-wrap:balance}
+.hint{margin:8px 0 16px;text-align:center;color:var(--muted);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;opacity:0}
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,20,.82);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.overlay.open{opacity:1;visibility:visible}
+.cert{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translateY(20px) scale(.96);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .cert{transform:none}
+.cert-card{width:100%;aspect-ratio:4/5;padding:28px 22px;border-radius:6px;background:linear-gradient(160deg,#16293e,#0d1b2a);border:1px solid var(--accent);box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--accent),0 20px 60px rgba(0,0,0,.6);
+display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.cert-eyebrow{margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cert-title{margin:6px 0 0;font-family:var(--serif);font-weight:600;font-style:italic;font-size:34px;line-height:1.05;color:var(--accent);text-wrap:balance}
+.cert-rule{width:56px;height:1px;background:var(--accent);margin:14px 0;opacity:.7}
+.cert-score{margin:0;font-family:var(--serif);font-size:56px;font-weight:700;line-height:1}
+.cert-score small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cert-lesson{margin:18px 0 0;font-family:var(--serif);font-size:20px;line-height:1.2}
+.cert-lesson span{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:4px}
+.cert-date{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.cert-hint{margin:0;font-size:12px;color:var(--muted)}
+.after{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+/* ===================== GAME STYLES ===================== */
+.scroll{position:relative;isolation:isolate;width:100%;padding:0 10px 22px;--extra:120px;--ink:#3a2812;--ink-soft:rgba(58,40,18,.62);--gold-ink:#8a5f14}
+.roll{position:relative;z-index:3;height:36px;border-radius:18px;background:linear-gradient(#7d6540,#cdb383 32%,#dcc79a 48%,#b2985f 78%,#5f4a2a);box-shadow:0 6px 16px rgba(0,0,0,.5),inset 0 0 0 1px rgba(60,40,10,.35)}
+.roll::before,.roll::after{content:"";position:absolute;top:4px;width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#e3cf9f,#9d8250 60%,#5c4727);box-shadow:inset 0 0 0 2px rgba(60,40,10,.35)}
+.roll::before{left:2px}.roll::after{right:2px}
+.roll.bottom{position:absolute;left:10px;right:10px;top:calc(100% - var(--extra) - 18px);transition:transform 1.5s cubic-bezier(.4,0,.2,1)}
+.scroll.won .roll.bottom{transform:translateY(var(--extra))}
+.sheet{position:relative;margin:-18px 12px;padding:34px 16px 0;background:
+ radial-gradient(ellipse at 50% 0%,rgba(255,240,200,.18),transparent 60%),
+ radial-gradient(ellipse at 50% 100%,rgba(60,40,10,.25),transparent 60%),
+ linear-gradient(90deg,#a98a58,#c9ad7c 12%,#d1b886 50%,#c9ad7c 88%,#a98a58);
+ box-shadow:inset 0 0 40px rgba(70,45,10,.35),0 10px 30px rgba(0,0,0,.45)}
+.grain{position:absolute;inset:0;width:100%;height:100%;opacity:.45;mix-blend-mode:multiply;pointer-events:none}
+.rows{position:relative;z-index:1;display:grid;gap:6px;padding-bottom:30px;transition:opacity .7s}
+.scroll.won .rows{opacity:0;pointer-events:none}
+.row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;min-height:78px;padding:6px 8px;border-radius:10px;text-align:left;color:var(--ink);transition:transform .15s}
+.row:active{transform:scale(.98)}
+.row+.row::before{content:"";position:absolute;left:28px;right:28px;margin-top:-84px;height:1px;background:rgba(58,40,18,.14)}
+.seal{position:relative;width:64px;height:64px}
+.half{position:absolute;inset:0;border-radius:48% 52% 50% 50%/52% 48% 52% 48%;background:radial-gradient(circle at 36% 30%,#c4392c,#8f1f1f 50%,#5c1010 95%);
+ box-shadow:inset 0 0 0 4px rgba(0,0,0,.14),inset 0 0 0 6px rgba(255,255,255,.07),0 3px 5px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;
+ transition:transform .65s cubic-bezier(.2,1.5,.35,1),opacity .6s}
+.half.l{clip-path:polygon(0 0,52% 0,44% 18%,56% 34%,46% 52%,55% 68%,45% 84%,50% 100%,0 100%)}
+.half.r{clip-path:polygon(52% 0,100% 0,100% 100%,50% 100%,45% 84%,55% 68%,46% 52%,56% 34%,44% 18%)}
+.em{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.04em;color:rgba(50,6,6,.95);text-shadow:0 1px 0 rgba(255,160,150,.35),0 -1px 0 rgba(0,0,0,.35)}
+.row.cracked .half{opacity:.88}
+.row.cracked .half.l{transform:translate(-8px,6px) rotate(-17deg)}
+.row.cracked .half.r{transform:translate(9px,8px) rotate(14deg)}
+.scroll.no-anim *{transition:none!important}
+.lbl{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ref{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.05}
+.sub{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.row.cracked .sub{color:var(--gold-ink);font-weight:600}
+.extra{height:var(--extra)}
+.cover{position:absolute;left:-36px;right:-36px;bottom:-40px;height:calc(var(--extra) + 40px);pointer-events:none;background:var(--bg);z-index:2;transform-origin:bottom;transition:transform 1.5s cubic-bezier(.4,0,.2,1)}
+.scroll.won .cover{transform:scaleY(0)}
+.inscribe{position:absolute;left:0;right:0;top:0;bottom:var(--extra);z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 22px;text-align:center;pointer-events:none}
+.ink{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(24px,6.6vw,30px);line-height:1.3;color:var(--gold-ink);text-shadow:0 0 8px rgba(212,162,76,.45);text-wrap:pretty}
+.ink .w{display:inline-block;white-space:nowrap}
+.ink .c{display:inline-block;opacity:0;white-space:pre}
+.ink-ref{margin:16px 0 0;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-ink);opacity:0;transition:opacity 1s}
+.fx{position:absolute;inset:0;z-index:4;pointer-events:none}
+.float{position:absolute;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--accent);text-shadow:0 2px 8px rgba(0,0,0,.6);will-change:transform,opacity}
+.shard{position:absolute;width:6px;height:8px;border-radius:2px;background:#9b2222;box-shadow:0 1px 2px rgba(0,0,0,.5);will-change:transform,opacity}
+.legend{position:relative;z-index:1;margin:22px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+.legend b{color:var(--accent);font-weight:600}
+
+/* seal card */
+.scrim{position:fixed;inset:0;z-index:30;background:rgba(5,12,20,.6);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.scrim.open{opacity:1;visibility:visible}
+.card{position:fixed;left:0;right:0;bottom:0;z-index:31;margin:0 auto;max-width:520px;max-height:88vh;overflow:auto;padding:14px 18px calc(22px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0;background:var(--panel-2);border:1px solid var(--line);border-bottom:0;box-shadow:0 -12px 40px rgba(0,0,0,.5);
+transform:translateY(105%);visibility:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility .4s}
+.card.open{transform:none;visibility:visible}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.card-eyebrow{margin:10px 0 2px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.card-ref{margin:0;font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.05}
+.close{width:48px;height:48px;margin:-4px -10px 0 0;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.card .btn{margin-top:14px;width:100%}
+.question{margin:22px 0 12px;font-family:var(--serif);font-size:22px;line-height:1.25;text-wrap:pretty}
+.choices{display:grid;gap:8px}
+.choice{min-height:52px;padding:10px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:16px;text-align:left;display:flex;align-items:center;transition:opacity .35s}
+.choice.wrong{opacity:.38;pointer-events:none}
+.choice.right{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+.opened-note{margin:22px 0 4px;display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px}
+.opened-note b{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html" aria-label="Back to lessons"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Lessons</a>
+    <div class="score-wrap"><span class="score-label">Score</span><span class="score" id="score">0</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </header>
+
+  <p class="eyebrow">Scroll of Seals</p>
+  <h1 class="title" id="title"></h1>
+  <p class="hint">Tap a seal. Read the passage, then answer to break it.</p>
+
+  <div class="scroll" id="scroll">
+    <div class="roll top"></div>
+    <div class="sheet">
+      <svg class="grain" preserveAspectRatio="none" aria-hidden="true"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .15  0 0 0 .9 0"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg>
+      <div class="rows" id="rows"></div>
+      <div class="inscribe"><p class="ink" id="ink"></p><p class="ink-ref" id="inkRef"></p></div>
+      <div class="extra"></div>
+      <div class="cover"></div>
+    </div>
+    <div class="roll bottom"></div>
+    <div class="fx" id="fx"></div>
+  </div>
+
+  <p class="legend"><b>+10</b> for each seal broken · <b>+5</b> more on the first try</p>
+  <div class="after"><button class="btn ghost hidden" id="certBtn">View certificate</button><button class="btn ghost hidden" id="againBtn">Play again</button></div>
+</div>
+
+<div class="menu" id="menu" role="menu">
+  <button id="soundBtn" role="menuitem">Sound <span class="val" id="soundVal">Off</span></button>
+  <button id="undoBtn" role="menuitem">Undo last tap</button>
+  <button id="resetBtn" class="danger" role="menuitem">Reset game</button>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="card" id="card" role="dialog" aria-modal="true">
+  <div class="card-head">
+    <div><p class="card-eyebrow" id="cardEyebrow"></p><h2 class="card-ref" id="cardRef"></h2></div>
+    <button class="close" id="cardClose" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <a class="btn ghost" id="cardLink" target="_blank" rel="noopener">Open in Gospel Library <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+  <p class="question" id="question"></p>
+  <div class="choices" id="choices"></div>
+  <p class="opened-note hidden" id="openedNote"></p>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay" id="certOverlay">
+  <div class="cert">
+    <div class="cert-card">
+      <p class="cert-eyebrow">Scroll of Seals · Completed</p>
+      <h2 class="cert-title" id="certTitle">Keeper of the Scroll</h2>
+      <div class="cert-rule"></div>
+      <p class="cert-score"><span id="certScore">0</span><small>points</small></p>
+      <p class="cert-lesson" id="certLesson"></p>
+      <p class="cert-date" id="certDate"></p>
+    </div>
+    <button class="btn" id="certClose">Back to scroll</button>
+    <p class="cert-hint">Take a screenshot to keep it.</p>
+  </div>
+</div>
+
+<script>
+/* ===================== SHELL (copy to other games) ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+const Prefs={
+  get(){try{return JSON.parse(localStorage.getItem('ss:prefs'))||{sound:false}}catch(e){return{sound:false}}},
+  set(p){try{localStorage.setItem('ss:prefs',JSON.stringify(p))}catch(e){}}
+};
+
+const Score={el:null,val:null,
+  init(el){this.el=el},
+  set(n,animate=true){if(n===this.val)return;const up=this.val!==null&&n>this.val;this.val=n;this.el.textContent=n;
+    if(animate&&up){this.el.classList.remove('bump');void this.el.offsetWidth;this.el.classList.add('bump')}}
+};
+
+const Sound={ctx:null,on:false,
+  tone(f,d=.14,t=0,g=.07){if(!this.on)return;try{this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const c=this.ctx,o=c.createOscillator(),a=c.createGain(),now=c.currentTime+t;
+    o.type='sine';o.frequency.value=f;a.gain.setValueAtTime(0,now);a.gain.linearRampToValueAtTime(g,now+.012);a.gain.exponentialRampToValueAtTime(.0001,now+d);
+    o.connect(a).connect(c.destination);o.start(now);o.stop(now+d+.03)}catch(e){}},
+  tap(tier){this.tone({common:523,uncommon:659,rare:784}[tier]||523)},
+  line(){this.tone(659,.16);this.tone(988,.24,.13)},
+  win(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.35,i*.14,.06))}
+};
+
+const Confetti={
+  run(ms=2800){const c=document.getElementById('confetti'),x=c.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.opacity=1;
+    const cols=[LESSON.theme.accent,LESSON.theme.text,'#b8862f','#fff7e6'],P=[];
+    for(let i=0;i<170;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*1.4*dpr,vy:(2+Math.random()*3)*dpr,r:Math.random()*6.28,vr:(Math.random()-.5)*.22,w:(5+Math.random()*5)*dpr,h:(8+Math.random()*8)*dpr,c:cols[i%cols.length],o:1});
+    const t0=performance.now();
+    const step=now=>{x.clearRect(0,0,W,H);const k=(now-t0)/ms;let alive=false;
+      for(const p of P){p.x+=p.vx+Math.sin(now/320+p.r)*.5*dpr;p.y+=p.vy;p.r+=p.vr;if(k>.7)p.o=Math.max(0,1-(k-.7)/.3);if(p.y<H+20&&p.o>0)alive=true;
+        x.save();x.globalAlpha=p.o;x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}
+      if(alive&&k<1.2)requestAnimationFrame(step);else{x.clearRect(0,0,W,H);c.style.opacity=0}};
+    requestAnimationFrame(step)}
+};
+
+function celebrate({title,score}){
+  Confetti.run();Sound.win();
+  document.getElementById('certTitle').textContent=title;
+  document.getElementById('certScore').textContent=score;
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  setTimeout(()=>document.getElementById('certOverlay').classList.add('open'),1500);
+}
+
+const Menu={
+  init({onUndo,onReset,canUndo}){
+    const menu=document.getElementById('menu'),btn=document.getElementById('menuBtn'),sound=document.getElementById('soundBtn'),val=document.getElementById('soundVal'),undo=document.getElementById('undoBtn'),reset=document.getElementById('resetBtn');
+    const prefs=Prefs.get();Sound.on=!!prefs.sound;val.textContent=Sound.on?'On':'Off';
+    const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');reset.textContent='Reset game';armed=false};
+    let armed=false,armTimer;
+    btn.addEventListener('click',e=>{e.stopPropagation();const open=!menu.classList.contains('open');if(open){undo.disabled=!canUndo();menu.classList.add('open');btn.setAttribute('aria-expanded','true')}else close()});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target))close()});
+    sound.addEventListener('click',()=>{Sound.on=!Sound.on;Prefs.set({...Prefs.get(),sound:Sound.on});val.textContent=Sound.on?'On':'Off';if(Sound.on)Sound.tone(659,.15)});
+    undo.addEventListener('click',()=>{onUndo();undo.disabled=!canUndo()});
+    reset.addEventListener('click',()=>{if(!armed){armed=true;reset.textContent='Tap again to reset';clearTimeout(armTimer);armTimer=setTimeout(()=>{armed=false;reset.textContent='Reset game'},3000);return}onReset();close()});
+    return{close}
+  }
+};
+
+/* ===================== SCROLL OF SEALS ===================== */
+const Q=LESSON.scriptures,K=Q.length,ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X'],TITLE='Keeper of the Scroll';
+const scroll=document.getElementById('scroll'),rows=document.getElementById('rows'),fx=document.getElementById('fx'),certBtn=document.getElementById('certBtn'),againBtn=document.getElementById('againBtn'),overlay=document.getElementById('certOverlay'),
+  scrim=document.getElementById('scrim'),card=document.getElementById('card'),ink=document.getElementById('ink'),inkRef=document.getElementById('inkRef');
+let S=Store.load(GAME,null),current=-1,inkTimer=null;
+if(!S||!Array.isArray(S.opened)||!Array.isArray(S.order)||S.order.length!==K||!Array.isArray(S.tries))S=fresh();
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fresh(){return{order:Q.map(q=>shuffle(q.choices.map((_,i)=>i))),tries:Q.map(()=>0),opened:[],won:false}}
+function save(){Store.save(GAME,S)}
+function pts(i){return 10+(S.tries[i]===0?5:0)}
+function total(){return S.opened.reduce((a,i)=>a+pts(i),0)}
+function isOpen(i){return S.opened.includes(i)}
+
+function build(){rows.innerHTML='';
+  Q.forEach((q,i)=>{const r=document.createElement('button');r.className='row';r.setAttribute('aria-label',`Seal ${i+1}, ${q.ref}`);
+    r.innerHTML=`<span class="seal"><span class="half l"><span class="em">${ROMAN[i]}</span></span><span class="half r"><span class="em">${ROMAN[i]}</span></span></span><span class="lbl"><span class="ref">${q.ref}</span><span class="sub">Tap to open</span></span>`;
+    r.addEventListener('click',()=>openCard(i));rows.appendChild(r)})}
+
+function paintRow(i){const r=rows.children[i];r.classList.toggle('cracked',isOpen(i));r.querySelector('.sub').textContent=isOpen(i)?`Broken · +${pts(i)}`:'Tap to open'}
+
+function applyState(instant){
+  if(instant)scroll.classList.add('no-anim');
+  Q.forEach((_,i)=>paintRow(i));
+  scroll.classList.toggle('won',!!S.won);certBtn.classList.toggle('hidden',!S.won);againBtn.classList.toggle('hidden',!S.won);
+  if(S.won)inscribe(true);else clearInk();
+  Score.set(total(),!instant);
+  if(instant)requestAnimationFrame(()=>requestAnimationFrame(()=>scroll.classList.remove('no-anim')))}
+
+function openCard(i){current=i;const q=Q[i];
+  document.getElementById('cardEyebrow').textContent=`Seal ${ROMAN[i]} · ${i+1} of ${K}`;
+  document.getElementById('cardRef').textContent=q.ref;
+  document.getElementById('cardLink').href=q.url;
+  const qEl=document.getElementById('question'),ch=document.getElementById('choices'),note=document.getElementById('openedNote');
+  ch.innerHTML='';
+  if(isOpen(i)){qEl.classList.add('hidden');ch.classList.add('hidden');note.classList.remove('hidden');note.innerHTML=`Seal broken — <b>${q.choices[q.answer]}</b> was the answer.`}
+  else{qEl.classList.remove('hidden');ch.classList.remove('hidden');note.classList.add('hidden');qEl.textContent=q.question;
+    S.order[i].forEach(ci=>{const b=document.createElement('button');b.className='choice';b.textContent=q.choices[ci];b.addEventListener('click',()=>choose(i,ci,b));ch.appendChild(b)})}
+  Sound.tone(440,.1,0,.04);scrim.classList.add('open');card.classList.add('open')}
+function closeCard(){scrim.classList.remove('open');card.classList.remove('open');current=-1}
+
+function choose(i,ci,btn){if(isOpen(i))return;
+  if(ci===Q[i].answer){btn.classList.add('right');[...btn.parentNode.children].forEach(b=>{if(b!==btn)b.classList.add('wrong')});
+    S.opened.push(i);const won=S.opened.length===K;if(won)S.won=true;save();
+    Sound.line();setTimeout(closeCard,550);setTimeout(()=>crack(i),750);
+    if(won)setTimeout(win,1900)}
+  else{S.tries[i]++;save();Sound.tone(220,.18,0,.05);
+    btn.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:380,easing:'ease-out'});
+    btn.classList.add('wrong')}}
+
+function crack(i){paintRow(i);const c=center(i);shards(c.x,c.y);floatText(c.x+44,c.y-10,'+'+pts(i));Score.set(total())}
+
+function center(i){const s=rows.children[i].querySelector('.seal').getBoundingClientRect(),b=scroll.getBoundingClientRect();return{x:s.left-b.left+s.width/2,y:s.top-b.top+s.height/2}}
+function floatText(x,y,txt){const e=document.createElement('span');e.className='float';e.textContent=txt;e.style.left=x+'px';e.style.top=y+'px';fx.appendChild(e);
+  e.animate([{transform:'translate(-50%,-50%) scale(.7)',opacity:0},{transform:'translate(-50%,-100%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-220%) scale(1)',opacity:0}],{duration:1000,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}
+function shards(x,y){for(let i=0;i<12;i++){const s=document.createElement('span');s.className='shard';s.style.left=x+'px';s.style.top=y+'px';fx.appendChild(s);
+  const a=-Math.PI/2+(Math.random()-.5)*2.6,d=30+Math.random()*40,dx=Math.cos(a)*d,dy=Math.sin(a)*d,rot=(Math.random()-.5)*540;
+  s.animate([{transform:'translate(-50%,-50%) rotate(0) scale(1)',opacity:1},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) rotate(${rot/2}deg) scale(1)`,opacity:1,offset:.45},{transform:`translate(calc(-50% + ${dx*1.2}px),calc(-50% + ${dy+70}px)) rotate(${rot}deg) scale(.6)`,opacity:0}],{duration:700+Math.random()*300,easing:'cubic-bezier(.2,.6,.4,1)',fill:'forwards'}).onfinish=()=>s.remove()}}
+
+function clearInk(){clearTimeout(inkTimer);ink.innerHTML='';inkRef.style.opacity=0}
+function inscribe(instant){clearInk();const text=LESSON.keyVerse.text;inkRef.textContent=LESSON.keyVerse.ref;
+  let i=0;text.split(' ').forEach((word,wi,arr)=>{const w=document.createElement('span');w.className='w';ink.appendChild(w);
+    const chars=[...word];if(wi<arr.length-1)chars.push(' ');
+    chars.forEach(ch=>{const s=document.createElement('span');s.className='c';s.textContent=ch;(ch===' '?ink:w).appendChild(s);
+      if(instant)s.style.opacity=1;
+      else s.animate([{opacity:0,transform:'translateY(3px)'},{opacity:1,transform:'translateY(0)'}],{duration:220,delay:i*55,easing:'ease-out',fill:'forwards'});i++})});
+  if(instant)inkRef.style.opacity=1;
+  else inkTimer=setTimeout(()=>{inkRef.style.opacity=1},text.length*55+300);
+  return text.length*55+300}
+
+function win(){scroll.classList.add('won');certBtn.classList.remove('hidden');againBtn.classList.remove('hidden');
+  setTimeout(()=>{const d=inscribe(false);setTimeout(()=>celebrate({title:TITLE,score:total()}),d+900)},1500)}
+
+function undo(){if(!S.opened.length)return;const i=S.opened.pop();S.won=false;overlay.classList.remove('open');closeCard();
+  scroll.classList.remove('won');certBtn.classList.add('hidden');againBtn.classList.add('hidden');clearInk();paintRow(i);Score.set(total());save()}
+function reset(){Store.reset(GAME);S=fresh();overlay.classList.remove('open');closeCard();build();applyState(true);save()}
+
+// init
+document.getElementById('title').textContent=LESSON.title;
+document.title=`Scroll of Seals · ${LESSON.title}`;
+document.getElementById('certLesson').innerHTML=`${LESSON.title}<span>${LESSON.reference}</span>`;
+Score.init(document.getElementById('score'));
+Menu.init({onUndo:undo,onReset:reset,canUndo:()=>S.opened.length>0});
+build();applyState(true);
+scrim.addEventListener('click',closeCard);
+document.getElementById('cardClose').addEventListener('click',closeCard);
+certBtn.addEventListener('click',()=>celebrate({title:TITLE,score:total()}));
+againBtn.addEventListener('click',reset);
+document.getElementById('certClose').addEventListener('click',()=>overlay.classList.remove('open'));
+</script>
+</body>
+</html>
