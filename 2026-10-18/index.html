@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>The Redeemer Shall Come to Zion · Sunday School Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-10-18-isaiah-58-66",
+  title: "The Redeemer Shall Come to Zion",
+  reference: "Isaiah 58–66",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  keyVerse: { ref: "Isaiah 60:1", text: "Arise, shine; for thy light is come, and the glory of the Lord is risen upon thee." }
+};
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(28px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+.wrap{width:100%;max-width:480px}
+.eyebrow{margin:0 0 6px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(34px,10vw,46px);line-height:1.02;text-align:center;text-wrap:balance}
+.ref{margin:8px 0 0;text-align:center;color:var(--muted);font-size:14px}
+.verse{margin:24px 0 28px;padding:0 8px;text-align:center}
+.verse-text{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(20px,5.6vw,24px);line-height:1.3;text-wrap:pretty}
+.verse-ref{margin:10px 0 0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.rule{width:56px;height:1px;background:var(--accent);opacity:.7;margin:0 auto 24px}
+/* ===================== LANDING ===================== */
+.group{margin:22px 0 10px;display:flex;align-items:baseline;gap:10px}
+.group h3{margin:0;font-family:var(--serif);font-weight:600;font-size:22px;line-height:1}
+.group span{font-size:12px;color:var(--muted)}
+.group:first-of-type{margin-top:0}
+.cards{display:grid;gap:10px}
+.card{display:grid;grid-template-columns:44px minmax(0,1fr) 20px;align-items:center;gap:14px;min-height:84px;padding:14px 16px 14px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);color:var(--text);transition:transform .15s}
+.card:active{transform:scale(.985)}
+.card:hover{color:var(--text)}
+.num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:22px;color:var(--accent);border:1px solid var(--accent)}
+.num svg{display:none;width:22px;height:22px}
+.num.done{background:var(--accent);color:var(--bg)}
+.num.done span{display:none}.num.done svg{display:block}
+.card.done{border-color:rgba(212,162,76,.55)}
+.card h2{margin:0;font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.1}
+.card p{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
+.card p b{color:var(--text);font-weight:600}
+.card .progress{color:var(--accent);margin-top:6px;font-size:12px;letter-spacing:.04em}
+.card .progress:empty{display:none}
+.chev{color:var(--accent);opacity:.8}
+.foot{margin:30px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Adult Sunday School</p>
+  <h1 class="title" id="title"></h1>
+  <p class="ref" id="ref"></p>
+
+  <div class="verse">
+    <p class="verse-text" id="verseText"></p>
+    <p class="verse-ref" id="verseRef"></p>
+  </div>
+  <div class="rule"></div>
+
+  <div id="list"></div>
+
+  <p class="foot">Play quietly on your own phone while you listen.<br>Sound is off unless you turn it on. Nothing you type leaves your phone.</p>
+</div>
+
+<script>
+/* ===================== SHELL ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+/* ===================== LANDING ===================== */
+// Each game: file, title, who it's for, one-line description, certificate title, and how to read its saved progress.
+const GROUPS=[
+  {name:'Play along',note:'with the lesson as it happens',games:[
+    {id:'hidden-picture',file:'hidden-picture.html',title:'Hidden Picture',for:'For listeners.',desc:'Tap the words you hear; each one uncovers part of a picture.',cert:'Watchman on the Tower',list:'cleared',unit:n=>`${n} revealed`},
+    {id:'watered-garden',file:'watered-garden.html',title:'Watered Garden',for:'For busy hands.',desc:'Tap to water six garden beds, one for each part of the lesson.',cert:'A Watered Garden',list:'hist',unit:n=>`${n} watering${n===1?'':'s'}`},
+    {id:'ponder-journal',file:'ponder-journal.html',title:'Ponder Journal',for:'For quiet reflectors.',desc:'Seven private pages. Write a little, or tap a suggestion.',cert:'Pondered in My Heart',list:'kept',unit:n=>`${n} page${n===1?'':'s'} kept`}]},
+  {name:'Scripture games',note:'read, recall, and put in order',games:[
+    {id:'scroll-of-seals',file:'scroll-of-seals.html',title:'The Scroll of Isaiah',for:'For readers.',desc:'Open six passages and answer to break the wax seals.',cert:'Keeper of the Scroll',list:'opened',unit:n=>`${n} seal${n===1?'':'s'} broken`},
+    {id:'arise-shine',file:'arise-shine.html',title:'Arise, Shine',for:'For thinkers.',desc:'Ten questions; every right answer lays a stone until the dawn rises.',cert:'Repairer of the Breach',list:'answers',unit:n=>`question ${n+1}`},
+    {id:'luke-4-in-order',file:'luke-4-in-order.html',title:'Luke 4 in Order',for:'For step-by-step thinkers.',desc:'Tap the events at Nazareth in the order they happened.',cert:'Witness at Nazareth',list:'placed',unit:n=>`${n} of 8 placed`},
+    {id:'names-of-the-redeemer',file:'names-of-the-redeemer.html',title:'Names of the Redeemer',for:'For visual memory.',desc:'Flip cards to match six names of Christ to their verses.',cert:'Witness of His Names',list:'matched',unit:n=>`${n} of 6 matched`}]},
+  {name:'Quiet puzzles',note:'no clock, no wrong moves',games:[
+    {id:'light-the-lamps',file:'light-the-lamps.html',title:'Light the Lamps',for:'For word lovers.',desc:'Guess three five-letter words from the reading to light three lamps.',cert:'A Lamp That Burneth',list:'lit',unit:n=>`${n} of 3 lamps lit`},
+    {id:'loose-the-bands',file:'loose-the-bands.html',title:'Loose the Bands',for:'For puzzlers.',desc:'Drag the pegs until no cords cross, and break three yokes.',cert:'Lifter of Burdens',list:'done',unit:n=>`${n} of 3 yokes broken`},
+    {id:'beauty-for-ashes',file:'beauty-for-ashes.html',title:'Beauty for Ashes',for:'For a calm moment.',desc:'Rub the ashes away with a finger and watch the flowers bloom.',cert:'Garment of Praise',list:'cells',unit:n=>`${Math.round(n/256*100)}% cleared`}]}
+];
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>';
+const CHEV='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>';
+document.getElementById('title').textContent=LESSON.title;
+document.getElementById('ref').textContent=LESSON.reference;
+document.getElementById('verseText').textContent=LESSON.keyVerse.text;
+document.getElementById('verseRef').textContent=LESSON.keyVerse.ref;
+document.title=`${LESSON.title} · Sunday School Games`;
+const list=document.getElementById('list');let n=0;
+GROUPS.forEach(g=>{const h=document.createElement('div');h.className='group';h.innerHTML='<h3></h3><span></span>';h.querySelector('h3').textContent=g.name;h.querySelector('span').textContent=g.note;list.appendChild(h);
+  const box=document.createElement('div');box.className='cards';list.appendChild(box);
+  g.games.forEach(m=>{n++;const a=document.createElement('a');a.className='card';a.href=m.file;a.dataset.game=m.id;
+    a.innerHTML=`<span class="num"><span>${n}</span>${CHECK}</span><span><h2></h2><p><b></b> </p><p class="progress"></p></span><span class="chev">${CHEV}</span>`;
+    a.querySelector('h2').textContent=m.title;a.querySelector('p b').textContent=m.for;a.querySelector('p').appendChild(document.createTextNode(m.desc));
+    const s=Store.load(m.id,null),p=a.querySelector('.progress');
+    if(s&&Array.isArray(s[m.list])&&s[m.list].length){
+      if(s.won){a.classList.add('done');a.querySelector('.num').classList.add('done');p.textContent=`Completed · ${m.cert}`}
+      else p.textContent=`In progress · ${m.unit(s[m.list].length)}`}
+    box.appendChild(a)})});
+</script>
+</body>
+</html>

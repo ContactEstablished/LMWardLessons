@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Luke 4 in Order · The Redeemer Shall Come to Zion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-10-18-isaiah-58-66",
+  title: "The Redeemer Shall Come to Zion",
+  reference: "Isaiah 58–66",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  // In the order they happened. img is optional.
+  events: [
+    { text: "Jesus stands up to read in the synagogue at Nazareth",          ref: "Luke 4:16",    img: "img/luke4-1.jpg" },
+    { text: "He is handed the book of Isaiah and reads the prophecy",         ref: "Luke 4:17–19" },
+    { text: "“This day is this scripture fulfilled in your ears”",           ref: "Luke 4:21" },
+    { text: "The people wonder, “Is not this Joseph's son?”",                ref: "Luke 4:22" },
+    { text: "He reminds them of Elijah and the widow, Elisha and Naaman",     ref: "Luke 4:25–27" },
+    { text: "Filled with wrath, they thrust Him out of the city",             ref: "Luke 4:28–29", img: "img/luke4-2.jpg" },
+    { text: "They lead Him to the brow of the hill",                         ref: "Luke 4:29",    img: "img/luke4-3.jpg" },
+    { text: "He passes through the midst of them and goes His way",          ref: "Luke 4:30",    img: "img/luke4-4.jpg" }
+  ]
+};
+const GAME = "luke-4-in-order";
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES (copy to other games) ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(10px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center;user-select:none;-webkit-user-select:none}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:100%;max-width:480px}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.back{display:flex;align-items:center;gap:4px;height:48px;padding:0 4px;font-size:15px;color:var(--muted)}
+.back:hover{color:var(--accent)}
+.score-wrap{display:flex;align-items:baseline;gap:8px}
+.score-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--accent);line-height:1;display:inline-block;min-width:1.2em;text-align:center;transform-origin:center}
+.score.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.menu-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.menu-btn:hover{color:var(--accent)}
+.menu-btn svg{width:22px;height:22px}
+.menu{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);right:16px;z-index:20;min-width:210px;padding:6px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5);
+opacity:0;transform:translateY(-8px) scale(.96);transform-origin:top right;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.menu.open{opacity:1;transform:none;visibility:visible}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 14px;border-radius:9px;font-size:15px;text-align:left}
+.menu button:hover{background:rgba(212,162,76,.1)}
+.menu button[disabled]{opacity:.4;cursor:default}
+.menu .val{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.menu .danger{color:#e8b4a0}
+.eyebrow{margin:14px 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,36px);line-height:1.05;text-align:center;text-wrap:balance}
+.hint{margin:8px 0 16px;text-align:center;color:var(--muted);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;opacity:0}
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,20,.82);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.overlay.open{opacity:1;visibility:visible}
+.cert{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translateY(20px) scale(.96);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .cert{transform:none}
+.cert-card{width:100%;aspect-ratio:4/5;padding:28px 22px;border-radius:6px;background:linear-gradient(160deg,#16293e,#0d1b2a);border:1px solid var(--accent);box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--accent),0 20px 60px rgba(0,0,0,.6);
+display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.cert-eyebrow{margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cert-title{margin:6px 0 0;font-family:var(--serif);font-weight:600;font-style:italic;font-size:34px;line-height:1.05;color:var(--accent);text-wrap:balance}
+.cert-rule{width:56px;height:1px;background:var(--accent);margin:14px 0;opacity:.7}
+.cert-score{margin:0;font-family:var(--serif);font-size:56px;font-weight:700;line-height:1}
+.cert-score small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cert-lesson{margin:18px 0 0;font-family:var(--serif);font-size:20px;line-height:1.2}
+.cert-lesson span{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:4px}
+.cert-date{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.cert-hint{margin:0;font-size:12px;color:var(--muted)}
+.after{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+/* calmer motion for people who ask their phone for it */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}}
+/* ===================== GAME STYLES ===================== */
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.timeline:empty::before{content:"Your timeline will build here.";display:block;padding:14px;border-radius:12px;border:1px dashed var(--line);color:var(--muted);font-size:14px;text-align:center}
+.step{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:center;padding:8px 12px 8px 8px;border-radius:12px;background:rgba(212,162,76,.1);border:1px solid rgba(212,162,76,.35)}
+.step .n{width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:17px}
+.step .t{font-size:14px;line-height:1.3}
+.step .r{display:block;margin-top:2px;font-size:11px;letter-spacing:.08em;color:var(--accent)}
+.next-label{margin:18px 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center}
+.pool{display:grid;gap:8px}
+.ev{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;gap:12px;min-height:58px;padding:10px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--line);text-align:left;font-size:15px;line-height:1.3;transition:opacity .3s,transform .15s}
+.ev.has-img{grid-template-columns:64px minmax(0,1fr);padding-left:8px}
+.ev img{width:64px;height:44px;object-fit:cover;border-radius:7px;display:block}
+.ev:active{transform:scale(.985)}
+.ev.nope{opacity:.55}
+.ev.glow{border-color:var(--accent);box-shadow:0 0 0 1px rgba(212,162,76,.5),0 0 18px rgba(212,162,76,.35);animation:breathe 1.8s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(212,162,76,.4),0 0 10px rgba(212,162,76,.2)}50%{box-shadow:0 0 0 1px rgba(212,162,76,.7),0 0 22px rgba(212,162,76,.45)}}
+.nudge{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);padding:10px 16px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:30;white-space:nowrap}
+.nudge.on{opacity:1}
+.film{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.film figure{margin:0;border-radius:10px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.film img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.film figcaption{padding:6px 8px 8px;font-size:12px;line-height:1.3;color:var(--muted)}
+.film figcaption b{display:block;color:var(--accent);font-weight:600;font-size:11px;letter-spacing:.08em}
+.fx{position:fixed;inset:0;pointer-events:none;z-index:25}
+.float{position:absolute;font-family:var(--serif);font-weight:700;font-size:26px;color:var(--accent);text-shadow:0 2px 8px rgba(0,0,0,.6);will-change:transform,opacity}
+.legend{margin:16px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+.legend b{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html" aria-label="Back to games"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Games</a>
+    <div class="score-wrap"><span class="score-label">Score</span><span class="score" id="score">0</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </header>
+
+  <p class="eyebrow">Luke 4 in Order</p>
+  <h1 class="title" id="title"></h1>
+  <p class="hint">What happened first? Tap the events in the order they happened.</p>
+
+  <ol class="timeline" id="timeline" aria-live="polite"></ol>
+  <p class="next-label" id="nextLabel">Tap what happened first</p>
+  <div class="pool" id="pool"></div>
+  <div class="film hidden" id="film"></div>
+
+  <p class="legend"><b>+10</b> for each event placed on the first try · <b>+5</b> after a second look</p>
+  <div class="after"><button class="btn ghost hidden" id="certBtn">View certificate</button><button class="btn ghost hidden" id="againBtn">Play again</button></div>
+</div>
+
+<div class="fx" id="fx"></div>
+<div class="nudge" id="nudge">Not yet. Look again.</div>
+
+<div class="menu" id="menu" role="menu">
+  <button id="soundBtn" role="menuitem">Sound <span class="val" id="soundVal">Off</span></button>
+  <button id="undoBtn" role="menuitem">Undo last placement</button>
+  <button id="resetBtn" class="danger" role="menuitem">Reset game</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay" id="certOverlay">
+  <div class="cert">
+    <div class="cert-card">
+      <p class="cert-eyebrow">Luke 4 in Order · Completed</p>
+      <h2 class="cert-title" id="certTitle">Witness at Nazareth</h2>
+      <div class="cert-rule"></div>
+      <p class="cert-score"><span id="certScore">0</span><small>points</small></p>
+      <p class="cert-lesson" id="certLesson"></p>
+      <p class="cert-date" id="certDate"></p>
+    </div>
+    <button class="btn" id="certClose">Back to the story</button>
+    <p class="cert-hint">Take a screenshot to keep it.</p>
+  </div>
+</div>
+
+<script>
+/* ===================== SHELL (copy to other games) ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+const Prefs={
+  get(){try{return JSON.parse(localStorage.getItem('ss:prefs'))||{sound:false}}catch(e){return{sound:false}}},
+  set(p){try{localStorage.setItem('ss:prefs',JSON.stringify(p))}catch(e){}}
+};
+
+const Score={el:null,val:null,
+  init(el){this.el=el},
+  set(n,animate=true){if(n===this.val)return;const up=this.val!==null&&n>this.val;this.val=n;this.el.textContent=n;
+    if(animate&&up){this.el.classList.remove('bump');void this.el.offsetWidth;this.el.classList.add('bump')}}
+};
+
+const Sound={ctx:null,on:false,
+  tone(f,d=.14,t=0,g=.07){if(!this.on)return;try{this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const c=this.ctx,o=c.createOscillator(),a=c.createGain(),now=c.currentTime+t;
+    o.type='sine';o.frequency.value=f;a.gain.setValueAtTime(0,now);a.gain.linearRampToValueAtTime(g,now+.012);a.gain.exponentialRampToValueAtTime(.0001,now+d);
+    o.connect(a).connect(c.destination);o.start(now);o.stop(now+d+.03)}catch(e){}},
+  tap(tier){this.tone({common:523,uncommon:659,rare:784}[tier]||523)},
+  line(){this.tone(659,.16);this.tone(988,.24,.13)},
+  win(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.35,i*.14,.06))}
+};
+
+const RM=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}})();
+const Confetti={
+  run(ms=2800){if(RM)return;const c=document.getElementById('confetti'),x=c.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.opacity=1;
+    const cols=[LESSON.theme.accent,LESSON.theme.text,'#b8862f','#fff7e6'],P=[];
+    for(let i=0;i<170;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*1.4*dpr,vy:(2+Math.random()*3)*dpr,r:Math.random()*6.28,vr:(Math.random()-.5)*.22,w:(5+Math.random()*5)*dpr,h:(8+Math.random()*8)*dpr,c:cols[i%cols.length],o:1});
+    const t0=performance.now();
+    const step=now=>{x.clearRect(0,0,W,H);const k=(now-t0)/ms;let alive=false;
+      for(const p of P){p.x+=p.vx+Math.sin(now/320+p.r)*.5*dpr;p.y+=p.vy;p.r+=p.vr;if(k>.7)p.o=Math.max(0,1-(k-.7)/.3);if(p.y<H+20&&p.o>0)alive=true;
+        x.save();x.globalAlpha=p.o;x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}
+      if(alive&&k<1.2)requestAnimationFrame(step);else{x.clearRect(0,0,W,H);c.style.opacity=0}};
+    requestAnimationFrame(step)}
+};
+
+function celebrate({title,score}){
+  Confetti.run();Sound.win();
+  document.getElementById('certTitle').textContent=title;
+  document.getElementById('certScore').textContent=score;
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  setTimeout(()=>document.getElementById('certOverlay').classList.add('open'),1500);
+}
+
+const Menu={
+  init({onUndo,onReset,canUndo}){
+    const menu=document.getElementById('menu'),btn=document.getElementById('menuBtn'),sound=document.getElementById('soundBtn'),val=document.getElementById('soundVal'),undo=document.getElementById('undoBtn'),reset=document.getElementById('resetBtn');
+    const prefs=Prefs.get();Sound.on=!!prefs.sound;val.textContent=Sound.on?'On':'Off';
+    const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');reset.textContent='Reset game';armed=false};
+    let armed=false,armTimer;
+    btn.addEventListener('click',e=>{e.stopPropagation();const open=!menu.classList.contains('open');if(open){undo.disabled=!canUndo();menu.classList.add('open');btn.setAttribute('aria-expanded','true')}else close()});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target))close()});
+    sound.addEventListener('click',()=>{Sound.on=!Sound.on;Prefs.set({...Prefs.get(),sound:Sound.on});val.textContent=Sound.on?'On':'Off';if(Sound.on)Sound.tone(659,.15)});
+    undo.addEventListener('click',()=>{onUndo();undo.disabled=!canUndo()});
+    reset.addEventListener('click',()=>{if(!armed){armed=true;reset.textContent='Tap again to reset';clearTimeout(armTimer);armTimer=setTimeout(()=>{armed=false;reset.textContent='Reset game'},3000);return}onReset();close()});
+    return{close}
+  }
+};
+
+// shared init
+document.getElementById('title').textContent=LESSON.title;
+document.getElementById('certLesson').innerHTML=`${LESSON.title}<span>${LESSON.reference}</span>`;
+Score.init(document.getElementById('score'));
+document.getElementById('certClose').addEventListener('click',()=>document.getElementById('certOverlay').classList.remove('open'));
+document.title=`Luke 4 in Order · ${LESSON.title}`;
+
+/* ===================== LUKE 4 IN ORDER ===================== */
+const E=LESSON.events,K=E.length,TITLE='Witness at Nazareth',ORD=['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth'];
+const timeline=document.getElementById('timeline'),pool=document.getElementById('pool'),nextLabel=document.getElementById('nextLabel'),film=document.getElementById('film'),fx=document.getElementById('fx'),nudge=document.getElementById('nudge'),
+  certBtn=document.getElementById('certBtn'),againBtn=document.getElementById('againBtn'),overlay=document.getElementById('certOverlay');
+let S=Store.load(GAME,null),misses=0,nudgeTimer=null,busy=false;
+if(!S||!Array.isArray(S.order)||S.order.length!==K||!Array.isArray(S.placed)||!Array.isArray(S.tries))S=fresh();
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fresh(){let o;do{o=shuffle([...Array(K).keys()])}while(o[0]===0&&o[1]===1);return{order:o,placed:[],tries:Array(K).fill(0),won:false}}
+function save(){Store.save(GAME,S)}
+function pts(i){return S.tries[i]===0?10:5}
+function total(){return S.placed.reduce((a,i)=>a+pts(i),0)}
+
+function stepEl(i,n){const li=document.createElement('li');li.className='step';li.innerHTML=`<span class="n">${n}</span><span class="t"></span>`;
+  const t=li.querySelector('.t');t.textContent=E[i].text;const r=document.createElement('span');r.className='r';r.textContent=E[i].ref;t.appendChild(r);return li}
+function evEl(i){const b=document.createElement('button');b.className='ev'+(E[i].img?' has-img':'');b.dataset.i=i;
+  if(E[i].img){const im=document.createElement('img');im.src=E[i].img;im.alt='';im.loading='lazy';b.appendChild(im)}
+  const s=document.createElement('span');s.textContent=E[i].text;b.appendChild(s);b.addEventListener('click',()=>tap(i,b));return b}
+
+function render(){timeline.innerHTML='';S.placed.forEach((i,k)=>timeline.appendChild(stepEl(i,k+1)));
+  pool.innerHTML='';S.order.filter(i=>!S.placed.includes(i)).forEach(i=>pool.appendChild(evEl(i)));
+  const n=S.placed.length;nextLabel.textContent=S.won?'The story, in order':`Tap what happened ${ORD[n]||'next'}`;
+  pool.classList.toggle('hidden',!!S.won);
+  film.classList.toggle('hidden',!S.won);if(S.won)showFilm();
+  certBtn.classList.toggle('hidden',!S.won);againBtn.classList.toggle('hidden',!S.won)}
+
+function tap(i,btn){if(S.won||busy)return;const want=S.placed.length;
+  if(i===want){busy=true;const r=btn.getBoundingClientRect();S.placed.push(i);const won=S.placed.length===K;if(won)S.won=true;save();misses=0;
+    Sound.tone(659,.14);floatText(r.left+r.width/2,r.top+r.height/2,'+'+pts(i));Score.set(total());
+    btn.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.96) translateY(-8px)'}],{duration:220,easing:'ease-in',fill:'forwards'}).onfinish=()=>{busy=false;render();
+      const li=timeline.lastElementChild;if(li)li.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:320,easing:'ease-out'});
+      if(won)win();else hint()}}
+  else{S.tries[want]++;misses++;save();Sound.tone(220,.16,0,.04);
+    btn.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(5px)'},{transform:'translateX(-3px)'},{transform:'translateX(0)'}],{duration:360,easing:'ease-out'});
+    showNudge(misses>=2?'Here’s a hint: look for the glowing card.':'Not yet. Look again.');hint()}}
+function hint(){[...pool.children].forEach(b=>b.classList.toggle('glow',misses>=2&&+b.dataset.i===S.placed.length))}
+function showNudge(t){nudge.textContent=t;nudge.classList.add('on');clearTimeout(nudgeTimer);nudgeTimer=setTimeout(()=>nudge.classList.remove('on'),1600)}
+
+function showFilm(){film.innerHTML='';E.filter(e=>e.img).forEach(e=>{const f=document.createElement('figure');f.innerHTML=`<img alt="" src="${e.img}"><figcaption><b></b></figcaption>`;
+  f.querySelector('b').textContent=e.ref;f.querySelector('figcaption').appendChild(document.createTextNode(e.text));film.appendChild(f)})}
+function win(){Sound.line();film.animate([{opacity:0},{opacity:1}],{duration:700});setTimeout(()=>celebrate({title:TITLE,score:total()}),1800)}
+
+function floatText(x,y,txt){const e=document.createElement('span');e.className='float';e.textContent=txt;e.style.left=x+'px';e.style.top=y+'px';fx.appendChild(e);
+  e.animate([{transform:'translate(-50%,-50%) scale(.7)',opacity:0},{transform:'translate(-50%,-100%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-220%) scale(1)',opacity:0}],{duration:1000,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}
+
+function undo(){if(!S.placed.length)return;S.placed.pop();S.won=false;misses=0;overlay.classList.remove('open');save();render();Score.set(total())}
+function reset(){Store.reset(GAME);S=fresh();misses=0;overlay.classList.remove('open');render();Score.set(total(),false);save()}
+
+Menu.init({onUndo:undo,onReset:reset,canUndo:()=>S.placed.length>0});
+render();Score.set(total(),false);
+certBtn.addEventListener('click',()=>celebrate({title:TITLE,score:total()}));
+againBtn.addEventListener('click',reset);
+</script>
+</body>
+</html>

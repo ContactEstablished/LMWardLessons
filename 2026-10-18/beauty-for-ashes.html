@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Beauty for Ashes · The Redeemer Shall Come to Zion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-10-18-isaiah-58-66",
+  title: "The Redeemer Shall Come to Zion",
+  reference: "Isaiah 58–66",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  revealVerse: {
+    ref: "Isaiah 61:3",
+    text: "To give unto them beauty for ashes, the oil of joy for mourning, the garment of praise for the spirit of heaviness."
+  },
+  finishAt: 0.85   // share of the ash to clear before the rest blows away
+};
+const GAME = "beauty-for-ashes";
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES (copy to other games) ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(10px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center;user-select:none;-webkit-user-select:none}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:100%;max-width:480px}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.back{display:flex;align-items:center;gap:4px;height:48px;padding:0 4px;font-size:15px;color:var(--muted)}
+.back:hover{color:var(--accent)}
+.score-wrap{display:flex;align-items:baseline;gap:8px}
+.score-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--accent);line-height:1;display:inline-block;min-width:1.2em;text-align:center;transform-origin:center}
+.score.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.menu-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.menu-btn:hover{color:var(--accent)}
+.menu-btn svg{width:22px;height:22px}
+.menu{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);right:16px;z-index:20;min-width:210px;padding:6px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5);
+opacity:0;transform:translateY(-8px) scale(.96);transform-origin:top right;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.menu.open{opacity:1;transform:none;visibility:visible}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 14px;border-radius:9px;font-size:15px;text-align:left}
+.menu button:hover{background:rgba(212,162,76,.1)}
+.menu button[disabled]{opacity:.4;cursor:default}
+.menu .val{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.menu .danger{color:#e8b4a0}
+.eyebrow{margin:14px 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,36px);line-height:1.05;text-align:center;text-wrap:balance}
+.hint{margin:8px 0 16px;text-align:center;color:var(--muted);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;opacity:0}
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,20,.82);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.overlay.open{opacity:1;visibility:visible}
+.cert{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translateY(20px) scale(.96);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .cert{transform:none}
+.cert-card{width:100%;aspect-ratio:4/5;padding:28px 22px;border-radius:6px;background:linear-gradient(160deg,#16293e,#0d1b2a);border:1px solid var(--accent);box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--accent),0 20px 60px rgba(0,0,0,.6);
+display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.cert-eyebrow{margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cert-title{margin:6px 0 0;font-family:var(--serif);font-weight:600;font-style:italic;font-size:34px;line-height:1.05;color:var(--accent);text-wrap:balance}
+.cert-rule{width:56px;height:1px;background:var(--accent);margin:14px 0;opacity:.7}
+.cert-score{margin:0;font-family:var(--serif);font-size:56px;font-weight:700;line-height:1}
+.cert-score small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cert-lesson{margin:18px 0 0;font-family:var(--serif);font-size:20px;line-height:1.2}
+.cert-lesson span{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:4px}
+.cert-date{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.cert-hint{margin:0;font-size:12px;color:var(--muted)}
+.after{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+/* calmer motion for people who ask their phone for it */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}}
+/* ===================== GAME STYLES ===================== */
+.garden{position:relative;width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#2a2522;box-shadow:0 14px 40px rgba(0,0,0,.45);touch-action:none}
+.scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.f .head{transform-box:fill-box;transform-origin:50% 50%;transform:scale(.3);opacity:.55;transition:transform .9s cubic-bezier(.2,1.5,.4,1),opacity .6s}
+.f.bloom .head{transform:scale(1);opacity:1}
+.f .stem{opacity:.5;transition:opacity .6s}
+.f.bloom .stem{opacity:1}
+.garden.no-anim *{transition:none!important}
+.ash{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;transition:opacity 1.6s ease}
+.garden.won .ash{opacity:0;pointer-events:none}
+.verse{position:absolute;left:0;right:0;bottom:0;padding:54px 18px 18px;background:linear-gradient(rgba(13,27,42,0),rgba(13,27,42,.9) 55%);text-align:center;opacity:0;transition:opacity 1.2s ease 1.4s;pointer-events:none}
+.garden.won .verse{opacity:1}
+.verse-text{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(17px,5vw,21px);line-height:1.25;text-wrap:pretty}
+.verse-ref{margin:6px 0 0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.fx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.float{position:absolute;font-family:var(--serif);font-weight:700;font-size:24px;color:var(--accent);text-shadow:0 2px 8px rgba(0,0,0,.6);will-change:transform,opacity}
+.meter{margin:16px auto 0;width:100%;height:8px;border-radius:99px;background:var(--panel);border:1px solid var(--line);overflow:hidden}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#b8862f,var(--accent),#f1cf85);border-radius:99px;transition:width .3s ease}
+.pct{margin:8px 0 0;text-align:center;font-size:13px;color:var(--muted)}
+.legend{margin:14px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+.legend b{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html" aria-label="Back to games"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Games</a>
+    <div class="score-wrap"><span class="score-label">Score</span><span class="score" id="score">0</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </header>
+
+  <p class="eyebrow">Beauty for Ashes</p>
+  <h1 class="title" id="title"></h1>
+  <p class="hint">Rub the ashes away with your finger. Flowers bloom wherever you clear.</p>
+
+  <div class="garden" id="garden">
+    <svg class="scene" id="scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#8fb6d6"/><stop offset=".3" stop-color="#f3d7a6"/><stop offset=".46" stop-color="#f6c986"/>
+        </linearGradient>
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#fff7e0"/><stop offset=".35" stop-color="#ffe7b0" stop-opacity=".9"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="meadow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a9bf72"/><stop offset="1" stop-color="#55743f"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" fill="url(#sky)"/>
+      <circle cx="70" cy="30" r="16" fill="url(#sunGlow)"/>
+      <circle cx="70" cy="30" r="5.5" fill="#fff6dc"/>
+      <path d="M0 44 C18 36 30 40 44 37 C60 33 74 39 100 35 L100 60 L0 60Z" fill="#9db28a" opacity=".75"/>
+      <path d="M0 50 C20 43 38 48 56 44 C72 41 86 46 100 43 L100 100 L0 100Z" fill="url(#meadow)"/>
+      <g id="flowers"></g>
+    </svg>
+    <canvas class="ash" id="ash" aria-label="Ashes covering a garden. Rub to clear them."></canvas>
+    <div class="verse"><p class="verse-text" id="verseText"></p><p class="verse-ref" id="verseRef"></p></div>
+    <div class="fx" id="fx"></div>
+  </div>
+  <div class="meter" aria-hidden="true"><div class="bar" id="bar"></div></div>
+  <p class="pct" id="pct">0% cleared</p>
+
+  <p class="legend"><b>+1</b> for every patch you clear · no wrong moves, no hurry</p>
+  <div class="after"><button class="btn ghost hidden" id="certBtn">View certificate</button><button class="btn ghost hidden" id="againBtn">Play again</button></div>
+</div>
+
+
+
+<div class="menu" id="menu" role="menu">
+  <button id="soundBtn" role="menuitem">Sound <span class="val" id="soundVal">Off</span></button>
+  <button id="undoBtn" role="menuitem">Undo</button>
+  <button id="resetBtn" class="danger" role="menuitem">Reset game</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay" id="certOverlay">
+  <div class="cert">
+    <div class="cert-card">
+      <p class="cert-eyebrow">Beauty for Ashes · Completed</p>
+      <h2 class="cert-title" id="certTitle">Garment of Praise</h2>
+      <div class="cert-rule"></div>
+      <p class="cert-score"><span id="certScore">0</span><small>points</small></p>
+      <p class="cert-lesson" id="certLesson"></p>
+      <p class="cert-date" id="certDate"></p>
+    </div>
+    <button class="btn" id="certClose">Back to the garden</button>
+    <p class="cert-hint">Take a screenshot to keep it.</p>
+  </div>
+</div>
+
+<script>
+/* ===================== SHELL (copy to other games) ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+const Prefs={
+  get(){try{return JSON.parse(localStorage.getItem('ss:prefs'))||{sound:false}}catch(e){return{sound:false}}},
+  set(p){try{localStorage.setItem('ss:prefs',JSON.stringify(p))}catch(e){}}
+};
+
+const Score={el:null,val:null,
+  init(el){this.el=el},
+  set(n,animate=true){if(n===this.val)return;const up=this.val!==null&&n>this.val;this.val=n;this.el.textContent=n;
+    if(animate&&up){this.el.classList.remove('bump');void this.el.offsetWidth;this.el.classList.add('bump')}}
+};
+
+const Sound={ctx:null,on:false,
+  tone(f,d=.14,t=0,g=.07){if(!this.on)return;try{this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const c=this.ctx,o=c.createOscillator(),a=c.createGain(),now=c.currentTime+t;
+    o.type='sine';o.frequency.value=f;a.gain.setValueAtTime(0,now);a.gain.linearRampToValueAtTime(g,now+.012);a.gain.exponentialRampToValueAtTime(.0001,now+d);
+    o.connect(a).connect(c.destination);o.start(now);o.stop(now+d+.03)}catch(e){}},
+  tap(tier){this.tone({common:523,uncommon:659,rare:784}[tier]||523)},
+  line(){this.tone(659,.16);this.tone(988,.24,.13)},
+  win(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.35,i*.14,.06))}
+};
+
+const RM=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}})();
+const Confetti={
+  run(ms=2800){if(RM)return;const c=document.getElementById('confetti'),x=c.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.opacity=1;
+    const cols=[LESSON.theme.accent,LESSON.theme.text,'#b8862f','#fff7e6'],P=[];
+    for(let i=0;i<170;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*1.4*dpr,vy:(2+Math.random()*3)*dpr,r:Math.random()*6.28,vr:(Math.random()-.5)*.22,w:(5+Math.random()*5)*dpr,h:(8+Math.random()*8)*dpr,c:cols[i%cols.length],o:1});
+    const t0=performance.now();
+    const step=now=>{x.clearRect(0,0,W,H);const k=(now-t0)/ms;let alive=false;
+      for(const p of P){p.x+=p.vx+Math.sin(now/320+p.r)*.5*dpr;p.y+=p.vy;p.r+=p.vr;if(k>.7)p.o=Math.max(0,1-(k-.7)/.3);if(p.y<H+20&&p.o>0)alive=true;
+        x.save();x.globalAlpha=p.o;x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}
+      if(alive&&k<1.2)requestAnimationFrame(step);else{x.clearRect(0,0,W,H);c.style.opacity=0}};
+    requestAnimationFrame(step)}
+};
+
+function celebrate({title,score}){
+  Confetti.run();Sound.win();
+  document.getElementById('certTitle').textContent=title;
+  document.getElementById('certScore').textContent=score;
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  setTimeout(()=>document.getElementById('certOverlay').classList.add('open'),1500);
+}
+
+const Menu={
+  init({onUndo,onReset,canUndo}){
+    const menu=document.getElementById('menu'),btn=document.getElementById('menuBtn'),sound=document.getElementById('soundBtn'),val=document.getElementById('soundVal'),undo=document.getElementById('undoBtn'),reset=document.getElementById('resetBtn');
+    const prefs=Prefs.get();Sound.on=!!prefs.sound;val.textContent=Sound.on?'On':'Off';
+    const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');reset.textContent='Reset game';armed=false};
+    let armed=false,armTimer;
+    btn.addEventListener('click',e=>{e.stopPropagation();const open=!menu.classList.contains('open');if(open){undo.disabled=!canUndo();menu.classList.add('open');btn.setAttribute('aria-expanded','true')}else close()});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target))close()});
+    sound.addEventListener('click',()=>{Sound.on=!Sound.on;Prefs.set({...Prefs.get(),sound:Sound.on});val.textContent=Sound.on?'On':'Off';if(Sound.on)Sound.tone(659,.15)});
+    undo.addEventListener('click',()=>{onUndo();undo.disabled=!canUndo()});
+    reset.addEventListener('click',()=>{if(!armed){armed=true;reset.textContent='Tap again to reset';clearTimeout(armTimer);armTimer=setTimeout(()=>{armed=false;reset.textContent='Reset game'},3000);return}onReset();close()});
+    return{close}
+  }
+};
+
+// shared init
+document.getElementById('title').textContent=LESSON.title;
+document.getElementById('certLesson').innerHTML=`${LESSON.title}<span>${LESSON.reference}</span>`;
+Score.init(document.getElementById('score'));
+document.getElementById('certClose').addEventListener('click',()=>document.getElementById('certOverlay').classList.remove('open'));
+document.title=`Beauty for Ashes · ${LESSON.title}`;
+
+/* ===================== BEAUTY FOR ASHES ===================== */
+const G=16,CELLS=G*G,TITLE='Garment of Praise',FINISH=LESSON.finishAt||.85;
+const garden=document.getElementById('garden'),canvas=document.getElementById('ash'),ctx=canvas.getContext('2d'),flowersEl=document.getElementById('flowers'),fx=document.getElementById('fx'),
+  bar=document.getElementById('bar'),pctEl=document.getElementById('pct'),certBtn=document.getElementById('certBtn'),againBtn=document.getElementById('againBtn'),overlay=document.getElementById('certOverlay');
+let S=Store.load(GAME,null);
+if(!S||!Array.isArray(S.cells)||typeof S.seed!=='number')S=fresh();
+let cleared=new Set(S.cells),flowers=[],drawing=false,last=null,dpr=1,W=0,lastFloat=0,pendingPts=0,saveTimer=null;
+
+function fresh(){return{seed:(Math.random()*2**31)|0,cells:[],won:false}}
+function save(){S.cells=[...cleared];Store.save(GAME,S)}
+function saveSoon(){clearTimeout(saveTimer);saveTimer=setTimeout(save,400)}
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function total(){return S.won?CELLS:cleared.size}
+
+// ---- the garden under the ash (same layout every time for a given seed) ----
+const COLORS=['#f4ecd8','#e8a0a8','#f1cf85','#c9a0dc','#ffffff','#e98b6d','#f7b7c4','#ffd98a'];
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function plant(){flowersEl.innerHTML='';flowers=[];const r=rng(S.seed);
+  const spots=[];for(let i=0;i<96;i++){const x=2+r()*96,y=49+Math.pow(r(),.75)*49;spots.push({x,y})}
+  spots.sort((a,b)=>a.y-b.y);
+  spots.forEach((p,i)=>{const s=1.05+(p.y-49)/49*1.45,col=COLORS[(r()*COLORS.length)|0],n=5+((r()*2)|0);
+    const g=el('g',{class:'f',transform:`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) scale(${s.toFixed(2)})`},flowersEl);
+    const st=el('g',{class:'stem'},g);
+    el('path',{d:'M0 0 C.6 2.2 -.4 4 .2 6.2',stroke:'#4f7a3a','stroke-width':'.55',fill:'none'},st);
+    el('ellipse',{cx:'1.1',cy:'3.6',rx:'1.1',ry:'.45',fill:'#5f8d45',transform:'rotate(-30 1.1 3.6)'},st);
+    const h=el('g',{class:'head'},g);
+    for(let k=0;k<n;k++){el('ellipse',{cx:'0',cy:'-1.25',rx:'.8',ry:'1.35',fill:col,transform:`rotate(${(360/n*k).toFixed(1)})`,opacity:'.96'},h)}
+    el('circle',{cx:'0',cy:'0',r:'.75',fill:col==='#f1cf85'||col==='#ffd98a'?'#8a5a1e':'#d4a24c'},h);
+    const cell=Math.min(G-1,Math.floor(p.x/100*G))+Math.min(G-1,Math.floor(p.y/100*G))*G;
+    flowers.push({g,cell})})}
+function paintFlowers(){flowers.forEach(f=>f.g.classList.toggle('bloom',S.won||cleared.has(f.cell)))}
+
+// ---- the ash itself ----
+function size(){const r=garden.getBoundingClientRect();dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.width*dpr);drawAsh()}
+function drawAsh(){const w=canvas.width,h=canvas.height,r=rng(S.seed^0x5bd1e995);ctx.globalCompositeOperation='source-over';
+  const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#4a4542');g.addColorStop(.5,'#38332f');g.addColorStop(1,'#2a2623');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+  for(let i=0;i<2600;i++){const v=40+((r()*70)|0);ctx.fillStyle=`rgba(${v},${v-3},${v-6},${.25+r()*.45})`;ctx.beginPath();ctx.arc(r()*w,r()*h,(.6+r()*2.4)*dpr,0,6.283);ctx.fill()}
+  for(let i=0;i<46;i++){ctx.fillStyle=`rgba(224,123,57,${.18+r()*.3})`;ctx.beginPath();ctx.arc(r()*w,r()*h,(.8+r()*1.6)*dpr,0,6.283);ctx.fill()}
+  ctx.fillStyle='rgba(244,236,216,.30)';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font=`italic 600 ${Math.round(w*.075)}px "Cormorant Garamond", Georgia, serif`;ctx.fillText('beauty for ashes',w/2,h*.46);
+  ctx.font=`${Math.round(w*.036)}px -apple-system, "Segoe UI", sans-serif`;ctx.fillText('rub here',w/2,h*.56);
+  ctx.globalCompositeOperation='destination-out';const c=w/G;
+  cleared.forEach(i=>{const x=(i%G+.5)*c,y=(Math.floor(i/G)+.5)*c;ctx.beginPath();ctx.arc(x,y,c*.78,0,6.283);ctx.fill()})}
+
+function brush(){return W*.075*dpr}
+function scrub(x,y){const b=brush();ctx.globalCompositeOperation='destination-out';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=b*2;
+  ctx.beginPath();if(last){ctx.moveTo(last.x,last.y)}else ctx.moveTo(x,y);ctx.lineTo(x+.01,y);ctx.stroke();
+  const pts=[];const steps=last?Math.max(1,Math.ceil(Math.hypot(x-last.x,y-last.y)/(b*.5))):1;
+  for(let s=1;s<=steps;s++){const t=s/steps;pts.push(last?{x:last.x+(x-last.x)*t,y:last.y+(y-last.y)*t}:{x,y})}
+  const c=canvas.width/G;let gained=0;
+  pts.forEach(p=>{const c0=Math.max(0,Math.floor((p.x-b)/c)),c1=Math.min(G-1,Math.floor((p.x+b)/c)),r0=Math.max(0,Math.floor((p.y-b)/c)),r1=Math.min(G-1,Math.floor((p.y+b)/c));
+    for(let rr=r0;rr<=r1;rr++)for(let cc=c0;cc<=c1;cc++){const cx=(cc+.5)*c,cy=(rr+.5)*c,i=rr*G+cc;if(!cleared.has(i)&&Math.hypot(cx-p.x,cy-p.y)<b*.92){cleared.add(i);gained++}}});
+  last={x,y};
+  if(gained){pendingPts+=gained;Score.set(total());paintFlowers();progress();
+    const now=performance.now();if(now-lastFloat>650&&pendingPts>=3){floatText(x/dpr,y/dpr,'+'+pendingPts);pendingPts=0;lastFloat=now;Sound.tone(523+Math.random()*260,.09,0,.03)}
+    if(cleared.size/CELLS>=FINISH)finish()}}
+
+function point(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*dpr,y:(e.clientY-r.top)*dpr}}
+canvas.addEventListener('pointerdown',e=>{if(S.won)return;e.preventDefault();drawing=true;last=null;try{canvas.setPointerCapture(e.pointerId)}catch(_){}const p=point(e);scrub(p.x,p.y)});
+canvas.addEventListener('pointermove',e=>{if(!drawing||S.won)return;e.preventDefault();const p=point(e);scrub(p.x,p.y)});
+const stop=()=>{if(!drawing)return;drawing=false;last=null;pendingPts=0;saveSoon()};
+canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);canvas.addEventListener('pointerleave',stop);
+canvas.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+
+function progress(){const p=S.won?100:Math.min(100,Math.round(cleared.size/CELLS*100));bar.style.width=p+'%';
+  pctEl.textContent=S.won?'All clear · beauty for ashes':`${p}% cleared`}
+
+function finish(){if(S.won)return;S.won=true;drawing=false;for(let i=0;i<CELLS;i++)cleared.add(i);save();
+  garden.classList.add('won');paintFlowers();progress();Score.set(total());Sound.line();
+  certBtn.classList.remove('hidden');againBtn.classList.remove('hidden');
+  setTimeout(()=>celebrate({title:TITLE,score:total()}),3400)}
+
+function floatText(x,y,txt){const e=document.createElement('span');e.className='float';e.textContent=txt;e.style.left=x+'px';e.style.top=y+'px';fx.appendChild(e);
+  e.animate([{transform:'translate(-50%,-50%) scale(.7)',opacity:0},{transform:'translate(-50%,-120%) scale(1.1)',opacity:1,offset:.25},{transform:'translate(-50%,-240%) scale(1)',opacity:0}],{duration:1000,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}
+
+function applyState(){garden.classList.add('no-anim');plant();size();paintFlowers();progress();
+  garden.classList.toggle('won',!!S.won);certBtn.classList.toggle('hidden',!S.won);againBtn.classList.toggle('hidden',!S.won);Score.set(total(),false);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>garden.classList.remove('no-anim')))}
+function reset(){Store.reset(GAME);S=fresh();cleared=new Set();overlay.classList.remove('open');applyState();save()}
+
+document.getElementById('verseText').textContent=LESSON.revealVerse.text;
+document.getElementById('verseRef').textContent=LESSON.revealVerse.ref;
+Menu.init({onUndo:()=>{},onReset:reset,canUndo:()=>false});
+applyState();
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(Math.abs(garden.getBoundingClientRect().width-W)>2)size()},150)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!S.won)drawAsh()});
+certBtn.addEventListener('click',()=>celebrate({title:TITLE,score:total()}));
+againBtn.addEventListener('click',reset);
+</script>
+</body>
+</html>

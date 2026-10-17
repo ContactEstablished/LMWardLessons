@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b2a">
+<title>Watered Garden · The Redeemer Shall Come to Zion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<script>
+// ===================== LESSON PACK — edit weekly =====================
+const LESSON = {
+  id: "2026-10-18-isaiah-58-66",
+  title: "The Redeemer Shall Come to Zion",
+  reference: "Isaiah 58–66",
+  theme: { bg: "#0d1b2a", accent: "#d4a24c", text: "#f4ecd8" },
+  // One bed for each part of the lesson. Five waterings bring a plant to bloom.
+  beds: [
+    { label: "Opener",     sub: "Luke 4",       petals: "#f4ecd8", center: "#d4a24c", n: 6 },
+    { label: "Fasting",    sub: "Isaiah 58:3–12",  petals: "#e98b9a", center: "#f1cf85", n: 5 },
+    { label: "Sabbath",    sub: "Isaiah 58:13–14", petals: "#ffffff", center: "#e0a63a", n: 12 },
+    { label: "Redeemer",   sub: "Isaiah 61:1–3",   petals: "#ee9a5c", center: "#7a3d12", n: 6 },
+    { label: "Light",      sub: "Isaiah 60; 62",   petals: "#f3c64f", center: "#6b4317", n: 14 },
+    { label: "Millennium", sub: "Isaiah 65–66",    petals: "#b79ae0", center: "#f4ecd8", n: 5 }
+  ],
+  stages: 5,
+  revealVerse: { ref: "Isaiah 58:11", text: "And thou shalt be like a watered garden, and like a spring of water, whose waters fail not." }
+};
+const GAME = "watered-garden";
+// =====================================================================
+</script>
+<style>
+/* ===================== SHELL STYLES (copy to other games) ===================== */
+:root{--bg:#0d1b2a;--accent:#d4a24c;--text:#f4ecd8;--panel:#15283c;--panel-2:#1b3249;--muted:rgba(244,236,216,.62);--line:rgba(212,162,76,.22);
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%}
+body{padding:max(10px,env(safe-area-inset-top)) 16px 40px;display:flex;flex-direction:column;align-items:center;user-select:none;-webkit-user-select:none}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:100%;max-width:480px}
+.top{display:flex;align-items:center;justify-content:space-between;height:48px}
+.back{display:flex;align-items:center;gap:4px;height:48px;padding:0 4px;font-size:15px;color:var(--muted)}
+.back:hover{color:var(--accent)}
+.score-wrap{display:flex;align-items:baseline;gap:8px}
+.score-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.score{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--accent);line-height:1;display:inline-block;min-width:1.2em;text-align:center;transform-origin:center}
+.score.bump{animation:bump .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.4)}100%{transform:scale(1)}}
+.menu-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted)}
+.menu-btn:hover{color:var(--accent)}
+.menu-btn svg{width:22px;height:22px}
+.menu{position:fixed;top:calc(max(10px,env(safe-area-inset-top)) + 52px);right:16px;z-index:20;min-width:210px;padding:6px;border-radius:14px;background:var(--panel-2);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.5);
+opacity:0;transform:translateY(-8px) scale(.96);transform-origin:top right;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.menu.open{opacity:1;transform:none;visibility:visible}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 14px;border-radius:9px;font-size:15px;text-align:left}
+.menu button:hover{background:rgba(212,162,76,.1)}
+.menu button[disabled]{opacity:.4;cursor:default}
+.menu .val{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.menu .danger{color:#e8b4a0}
+.eyebrow{margin:14px 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-align:center}
+.title{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,36px);line-height:1.05;text-align:center;text-wrap:balance}
+.hint{margin:8px 0 16px;text-align:center;color:var(--muted);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;opacity:0}
+.overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(5,12,20,.82);opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.overlay.open{opacity:1;visibility:visible}
+.cert{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;transform:translateY(20px) scale(.96);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.overlay.open .cert{transform:none}
+.cert-card{width:100%;aspect-ratio:4/5;padding:28px 22px;border-radius:6px;background:linear-gradient(160deg,#16293e,#0d1b2a);border:1px solid var(--accent);box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--accent),0 20px 60px rgba(0,0,0,.6);
+display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.cert-eyebrow{margin:0;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cert-title{margin:6px 0 0;font-family:var(--serif);font-weight:600;font-style:italic;font-size:34px;line-height:1.05;color:var(--accent);text-wrap:balance}
+.cert-rule{width:56px;height:1px;background:var(--accent);margin:14px 0;opacity:.7}
+.cert-score{margin:0;font-family:var(--serif);font-size:56px;font-weight:700;line-height:1}
+.cert-score small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cert-lesson{margin:18px 0 0;font-family:var(--serif);font-size:20px;line-height:1.2}
+.cert-lesson span{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-top:4px}
+.cert-date{margin:10px 0 0;font-size:12px;color:var(--muted)}
+.cert-hint{margin:0;font-size:12px;color:var(--muted)}
+.after{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+/* calmer motion for people who ask their phone for it */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}}
+/* ===================== GAME STYLES ===================== */
+.beds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bed{position:relative;display:flex;flex-direction:column;align-items:stretch;padding:0;border-radius:14px;overflow:hidden;background:linear-gradient(#1a3147,#132739);border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.35);text-align:center}
+.bed:active{transform:scale(.985)}
+.bed svg{display:block;width:100%;aspect-ratio:1/1}
+.bed .lbl{padding:6px 8px 9px;border-top:1px solid rgba(212,162,76,.15)}
+.bed .nm{display:block;font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.05}
+.bed .sb{display:block;margin-top:2px;font-size:11px;color:var(--muted)}
+.bed .pips{display:flex;justify-content:center;gap:4px;margin-top:5px}
+.bed .pips i{width:7px;height:7px;border-radius:50%;border:1px solid rgba(143,182,214,.6)}
+.bed .pips i.on{background:#8fb6d6;border-color:#8fb6d6}
+.bed.bloom{border-color:rgba(212,162,76,.6)}
+.bed.bloom .nm{color:var(--accent)}
+.drop{position:absolute;width:7px;height:10px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#9cc7e8;box-shadow:0 0 4px rgba(156,199,232,.7);pointer-events:none}
+.spring{position:relative;margin:14px 0 0;border-radius:14px;overflow:hidden;height:0;transition:height 1.2s cubic-bezier(.3,.8,.3,1)}
+.spring.on{height:64px}
+.spring svg{position:absolute;inset:0;width:200%;height:100%;animation:flow 6s linear infinite}
+@keyframes flow{to{transform:translateX(-50%)}}
+.fx{position:fixed;inset:0;pointer-events:none;z-index:25}
+.float{position:absolute;font-family:var(--serif);font-weight:700;font-size:24px;color:var(--accent);text-shadow:0 2px 8px rgba(0,0,0,.6);will-change:transform,opacity}
+.verse-card{margin:12px 0 0;padding:16px;border-radius:14px;background:var(--panel);border:1px solid var(--line);text-align:center}
+.verse-card p{margin:0;font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.28;text-wrap:pretty}
+.verse-card .r{margin:8px 0 0;font-family:var(--sans);font-style:normal;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.legend{margin:14px 0 0;text-align:center;font-size:12px;color:var(--muted);line-height:1.5}
+.legend b{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html" aria-label="Back to games"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Games</a>
+    <div class="score-wrap"><span class="score-label">Score</span><span class="score" id="score">0</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </header>
+
+  <p class="eyebrow">Watered Garden</p>
+  <h1 class="title" id="title"></h1>
+  <p class="hint">Tap a bed to water it. Try watering a little during each part of the lesson.</p>
+
+  <div class="beds" id="beds"></div>
+  <div class="spring" id="spring" aria-hidden="true">
+    <svg viewBox="0 0 400 64" preserveAspectRatio="none"><defs><linearGradient id="wt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9cc7e8"/><stop offset="1" stop-color="#3f6f99"/></linearGradient></defs>
+      <path d="M0 22 C25 12 50 32 75 22 S125 12 150 22 S200 32 225 22 S275 12 300 22 S350 32 375 22 S400 22 400 22 L400 64 L0 64Z" fill="url(#wt)"/>
+      <path d="M0 30 C25 22 50 38 75 30 S125 22 150 30 S200 38 225 30 S275 22 300 30 S350 38 375 30 S400 30 400 30" fill="none" stroke="#e4f1fb" stroke-width="2" opacity=".6"/></svg>
+  </div>
+  <div class="verse-card hidden" id="verseCard"><p id="verseText"></p><p class="r" id="verseRef"></p></div>
+
+  <p class="legend"><b>+1</b> for each watering · <b>+10</b> when a plant blooms</p>
+  <div class="after"><button class="btn ghost hidden" id="certBtn">View certificate</button><button class="btn ghost hidden" id="againBtn">Play again</button></div>
+</div>
+
+<div class="fx" id="fx"></div>
+
+<div class="menu" id="menu" role="menu">
+  <button id="soundBtn" role="menuitem">Sound <span class="val" id="soundVal">Off</span></button>
+  <button id="undoBtn" role="menuitem">Undo last watering</button>
+  <button id="resetBtn" class="danger" role="menuitem">Reset game</button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="overlay" id="certOverlay">
+  <div class="cert">
+    <div class="cert-card">
+      <p class="cert-eyebrow">Watered Garden · Completed</p>
+      <h2 class="cert-title" id="certTitle">A Watered Garden</h2>
+      <div class="cert-rule"></div>
+      <p class="cert-score"><span id="certScore">0</span><small>points</small></p>
+      <p class="cert-lesson" id="certLesson"></p>
+      <p class="cert-date" id="certDate"></p>
+    </div>
+    <button class="btn" id="certClose">Back to the garden</button>
+    <p class="cert-hint">Take a screenshot to keep it.</p>
+  </div>
+</div>
+
+<script>
+/* ===================== SHELL (copy to other games) ===================== */
+(function theme(){const s=document.documentElement.style,t=LESSON.theme;s.setProperty('--bg',t.bg);s.setProperty('--accent',t.accent);s.setProperty('--text',t.text)})();
+
+const Store={
+  key:g=>`ss:${LESSON.id}:${g}`,
+  load(g,fallback){try{const r=localStorage.getItem(this.key(g));return r?JSON.parse(r):fallback}catch(e){return fallback}},
+  save(g,data){try{localStorage.setItem(this.key(g),JSON.stringify(data))}catch(e){}},
+  reset(g){try{localStorage.removeItem(this.key(g))}catch(e){}}
+};
+const Prefs={
+  get(){try{return JSON.parse(localStorage.getItem('ss:prefs'))||{sound:false}}catch(e){return{sound:false}}},
+  set(p){try{localStorage.setItem('ss:prefs',JSON.stringify(p))}catch(e){}}
+};
+
+const Score={el:null,val:null,
+  init(el){this.el=el},
+  set(n,animate=true){if(n===this.val)return;const up=this.val!==null&&n>this.val;this.val=n;this.el.textContent=n;
+    if(animate&&up){this.el.classList.remove('bump');void this.el.offsetWidth;this.el.classList.add('bump')}}
+};
+
+const Sound={ctx:null,on:false,
+  tone(f,d=.14,t=0,g=.07){if(!this.on)return;try{this.ctx=this.ctx||new (window.AudioContext||window.webkitAudioContext)();const c=this.ctx,o=c.createOscillator(),a=c.createGain(),now=c.currentTime+t;
+    o.type='sine';o.frequency.value=f;a.gain.setValueAtTime(0,now);a.gain.linearRampToValueAtTime(g,now+.012);a.gain.exponentialRampToValueAtTime(.0001,now+d);
+    o.connect(a).connect(c.destination);o.start(now);o.stop(now+d+.03)}catch(e){}},
+  tap(tier){this.tone({common:523,uncommon:659,rare:784}[tier]||523)},
+  line(){this.tone(659,.16);this.tone(988,.24,.13)},
+  win(){[523,659,784,1047].forEach((f,i)=>this.tone(f,.35,i*.14,.06))}
+};
+
+const RM=(()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}})();
+const Confetti={
+  run(ms=2800){if(RM)return;const c=document.getElementById('confetti'),x=c.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=c.width=innerWidth*dpr,H=c.height=innerHeight*dpr;c.style.opacity=1;
+    const cols=[LESSON.theme.accent,LESSON.theme.text,'#b8862f','#fff7e6'],P=[];
+    for(let i=0;i<170;i++)P.push({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*1.4*dpr,vy:(2+Math.random()*3)*dpr,r:Math.random()*6.28,vr:(Math.random()-.5)*.22,w:(5+Math.random()*5)*dpr,h:(8+Math.random()*8)*dpr,c:cols[i%cols.length],o:1});
+    const t0=performance.now();
+    const step=now=>{x.clearRect(0,0,W,H);const k=(now-t0)/ms;let alive=false;
+      for(const p of P){p.x+=p.vx+Math.sin(now/320+p.r)*.5*dpr;p.y+=p.vy;p.r+=p.vr;if(k>.7)p.o=Math.max(0,1-(k-.7)/.3);if(p.y<H+20&&p.o>0)alive=true;
+        x.save();x.globalAlpha=p.o;x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()}
+      if(alive&&k<1.2)requestAnimationFrame(step);else{x.clearRect(0,0,W,H);c.style.opacity=0}};
+    requestAnimationFrame(step)}
+};
+
+function celebrate({title,score}){
+  Confetti.run();Sound.win();
+  document.getElementById('certTitle').textContent=title;
+  document.getElementById('certScore').textContent=score;
+  document.getElementById('certDate').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  setTimeout(()=>document.getElementById('certOverlay').classList.add('open'),1500);
+}
+
+const Menu={
+  init({onUndo,onReset,canUndo}){
+    const menu=document.getElementById('menu'),btn=document.getElementById('menuBtn'),sound=document.getElementById('soundBtn'),val=document.getElementById('soundVal'),undo=document.getElementById('undoBtn'),reset=document.getElementById('resetBtn');
+    const prefs=Prefs.get();Sound.on=!!prefs.sound;val.textContent=Sound.on?'On':'Off';
+    const close=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');reset.textContent='Reset game';armed=false};
+    let armed=false,armTimer;
+    btn.addEventListener('click',e=>{e.stopPropagation();const open=!menu.classList.contains('open');if(open){undo.disabled=!canUndo();menu.classList.add('open');btn.setAttribute('aria-expanded','true')}else close()});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target))close()});
+    sound.addEventListener('click',()=>{Sound.on=!Sound.on;Prefs.set({...Prefs.get(),sound:Sound.on});val.textContent=Sound.on?'On':'Off';if(Sound.on)Sound.tone(659,.15)});
+    undo.addEventListener('click',()=>{onUndo();undo.disabled=!canUndo()});
+    reset.addEventListener('click',()=>{if(!armed){armed=true;reset.textContent='Tap again to reset';clearTimeout(armTimer);armTimer=setTimeout(()=>{armed=false;reset.textContent='Reset game'},3000);return}onReset();close()});
+    return{close}
+  }
+};
+
+// shared init
+document.getElementById('title').textContent=LESSON.title;
+document.getElementById('certLesson').innerHTML=`${LESSON.title}<span>${LESSON.reference}</span>`;
+Score.init(document.getElementById('score'));
+document.getElementById('certClose').addEventListener('click',()=>document.getElementById('certOverlay').classList.remove('open'));
+document.title=`Watered Garden · ${LESSON.title}`;
+
+/* ===================== WATERED GARDEN ===================== */
+const B=LESSON.beds,NB=B.length,ST=LESSON.stages||5,TITLE='A Watered Garden';
+const bedsEl=document.getElementById('beds'),fx=document.getElementById('fx'),spring=document.getElementById('spring'),verseCard=document.getElementById('verseCard'),
+  certBtn=document.getElementById('certBtn'),againBtn=document.getElementById('againBtn'),overlay=document.getElementById('certOverlay');
+let S=Store.load(GAME,null);
+if(!S||!Array.isArray(S.w)||S.w.length!==NB||!Array.isArray(S.hist))S=fresh();
+
+function fresh(){return{w:Array(NB).fill(0),hist:[],won:false}}
+function save(){Store.save(GAME,S)}
+function bloomed(){return S.w.filter(n=>n>=ST).length}
+function total(){return S.w.reduce((a,n)=>a+Math.min(n,ST),0)+bloomed()*10}
+
+// a plant drawn for its stage: 0 seed, 1 sprout, 2 leaves, 3 bud, 4 opening, 5 bloom
+function plantSVG(b,s){const H=100,ground=86,stemTop=ground-[0,14,30,44,52,56][Math.min(s,5)];let g='';
+  g+=`<defs><radialGradient id="sky${b.label}" cx="50%" cy="10%" r="90%"><stop offset="0" stop-color="#27486a"/><stop offset="1" stop-color="#14283c"/></radialGradient></defs>`;
+  g+=`<rect width="100" height="100" fill="url(#sky${b.label})"/>`;
+  g+=`<ellipse cx="50" cy="${ground+7}" rx="40" ry="12" fill="#4a3424"/><ellipse cx="50" cy="${ground+3}" rx="34" ry="7" fill="#5e4330"/>`;
+  if(s===0){g+=`<ellipse cx="50" cy="${ground}" rx="3.4" ry="2.4" fill="#c9a46e"/>`;return wrap(g)}
+  g+=`<path d="M50 ${ground} C${s>2?47:49} ${ground-12} ${s>2?53:51} ${stemTop+12} 50 ${stemTop}" stroke="#6fa152" stroke-width="${s>2?2.6:2}" fill="none" stroke-linecap="round"/>`;
+  if(s===1){g+=`<path d="M50 ${stemTop+2} q-7 -6 -10 0 q6 4 10 0Z" fill="#8cc068"/><path d="M50 ${stemTop+2} q7 -6 10 0 q-6 4 -10 0Z" fill="#7bb55b"/>`;return wrap(g)}
+  const ly=ground-14;g+=`<path d="M49 ${ly} q-16 -10 -22 2 q12 6 22 -2Z" fill="#7bb55b"/><path d="M51 ${ly-8} q16 -10 22 2 q-12 6 -22 -2Z" fill="#8cc068"/>`;
+  if(s===2)return wrap(g);
+  if(s===3){g+=`<ellipse cx="50" cy="${stemTop-4}" rx="4.5" ry="7" fill="${b.petals}" opacity=".9"/><path d="M45.5 ${stemTop} q4.5 -4 9 0" fill="#6fa152"/>`;return wrap(g)}
+  const open=s>=5?1:.55,R=s>=5?11:7.5,n=b.n,cx=50,cy=stemTop-6;
+  for(let k=0;k<n;k++){const a=360/n*k;g+=`<ellipse cx="${cx}" cy="${cy-R*.55}" rx="${(n>9?2.2:3.6)*open+.6}" ry="${R*.62}" fill="${b.petals}" transform="rotate(${a.toFixed(1)} ${cx} ${cy})" opacity=".96"/>`}
+  g+=`<circle cx="${cx}" cy="${cy}" r="${(n>9?4.4:3.2)*(s>=5?1:.8)}" fill="${b.center}"/>`;
+  if(s>=5)g+=`<circle cx="${cx}" cy="${cy}" r="${R*1.6}" fill="${b.petals}" opacity=".08"/>`;
+  return wrap(g)}
+function wrap(inner){return`<svg viewBox="0 0 100 100" aria-hidden="true">${inner}</svg>`}
+
+function build(){bedsEl.innerHTML='';B.forEach((b,i)=>{const el=document.createElement('button');el.className='bed';el.dataset.i=i;
+  el.innerHTML=`<span class="pl"></span><span class="lbl"><span class="nm"></span><span class="sb"></span><span class="pips">${'<i></i>'.repeat(ST)}</span></span>`;
+  el.querySelector('.nm').textContent=b.label;el.querySelector('.sb').textContent=b.sub;el.addEventListener('click',()=>water(i));bedsEl.appendChild(el)});paint()}
+function paintBed(i){const el=bedsEl.children[i],n=Math.min(S.w[i],ST);el.querySelector('.pl').innerHTML=plantSVG(B[i],n);
+  [...el.querySelectorAll('.pips i')].forEach((p,k)=>p.classList.toggle('on',k<n));el.classList.toggle('bloom',n>=ST);
+  el.setAttribute('aria-label',`${B[i].label} bed, ${n>=ST?'in bloom':`watered ${n} of ${ST}`}`)}
+function paint(){B.forEach((_,i)=>paintBed(i));spring.classList.toggle('on',!!S.won);verseCard.classList.toggle('hidden',!S.won);
+  certBtn.classList.toggle('hidden',!S.won);againBtn.classList.toggle('hidden',!S.won)}
+
+function water(i){const el=bedsEl.children[i],r=el.getBoundingClientRect();drops(r);
+  if(S.w[i]>=ST){sparkle(r);return}
+  S.w[i]++;S.hist.push(i);const nowBloom=S.w[i]>=ST,won=nowBloom&&bloomed()===NB;if(won)S.won=true;save();
+  setTimeout(()=>{paintBed(i);el.querySelector('.pl svg').animate([{transform:'scale(.94)'},{transform:'scale(1)'}],{duration:360,easing:'cubic-bezier(.2,1.6,.4,1)'});
+    floatText(r.left+r.width/2,r.top+r.width*.35,nowBloom?'+11':'+1');Score.set(total());
+    if(nowBloom){Sound.line();sparkle(r)}else Sound.tone(700+S.w[i]*60,.1,0,.035);
+    if(won)setTimeout(win,900)},420)}
+function drops(r){for(let k=0;k<7;k++){const d=document.createElement('span');d.className='drop';const x=r.left+r.width*(.3+Math.random()*.4),y=r.top+8;d.style.left=x+'px';d.style.top=y+'px';fx.appendChild(d);
+  d.animate([{transform:'translateY(0)',opacity:0},{opacity:1,offset:.15},{transform:`translateY(${r.width*.62}px)`,opacity:.2}],{duration:420+Math.random()*160,delay:k*35,easing:'cubic-bezier(.5,0,1,1)',fill:'forwards'}).onfinish=()=>d.remove()}}
+function sparkle(r){for(let k=0;k<12;k++){const s=document.createElement('span');s.className='drop';s.style.background='#f1cf85';s.style.boxShadow='0 0 6px #f1cf85';s.style.width=s.style.height='5px';s.style.borderRadius='50%';
+  const x=r.left+r.width/2,y=r.top+r.width*.4;s.style.left=x+'px';s.style.top=y+'px';fx.appendChild(s);const a=Math.random()*6.283,dd=24+Math.random()*30;
+  s.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${Math.cos(a)*dd}px,${Math.sin(a)*dd}px) scale(0)`,opacity:0}],{duration:700,easing:'ease-out',fill:'forwards'}).onfinish=()=>s.remove()}}
+function floatText(x,y,txt){const e=document.createElement('span');e.className='float';e.textContent=txt;e.style.left=x+'px';e.style.top=y+'px';fx.appendChild(e);
+  e.animate([{transform:'translate(-50%,-50%) scale(.7)',opacity:0},{transform:'translate(-50%,-100%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-220%) scale(1)',opacity:0}],{duration:1000,easing:'ease-out',fill:'forwards'}).onfinish=()=>e.remove()}
+function win(){paint();verseCard.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:700,easing:'ease-out'});
+  setTimeout(()=>celebrate({title:TITLE,score:total()}),2200)}
+
+function undo(){if(!S.hist.length)return;const i=S.hist.pop();S.w[i]=Math.max(0,S.w[i]-1);S.won=false;overlay.classList.remove('open');save();paint();Score.set(total())}
+function reset(){Store.reset(GAME);S=fresh();overlay.classList.remove('open');paint();Score.set(total(),false);save()}
+
+document.getElementById('verseText').textContent=LESSON.revealVerse.text;
+document.getElementById('verseRef').textContent=LESSON.revealVerse.ref;
+Menu.init({onUndo:undo,onReset:reset,canUndo:()=>S.hist.length>0});
+build();Score.set(total(),false);
+certBtn.addEventListener('click',()=>celebrate({title:TITLE,score:total()}));
+againBtn.addEventListener('click',reset);
+</script>
+</body>
+</html>
